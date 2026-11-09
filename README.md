@@ -18,7 +18,7 @@ Students choose M.Sc. or Ph.D. and where to start the countdown:
 
 ## Proposal countdown (both degrees)
 
-Counted back from the proposal meeting: pilot data collection (1 semester, about 4 months), pilot analysis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
+Counted back from the proposal meeting: pilot data collection (1 semester, about 4 months) with pilot analysis alongside it, pilot data summary and synthesis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
 
 ## Thesis deadlines
 
@@ -29,7 +29,7 @@ Counted back from the proposal meeting: pilot data collection (1 semester, about
 
 A deadline that lands on a weekend moves to the Friday before. Students who have already finished data collection can tick a box so that milestone shows as finished and does not trigger a warning.
 
-For the Ph.D., analysis and writing run throughout thesis data collection and continue for 2 months after the last data are collected. The page shows this as a note.
+Analysis and writing run alongside thesis data collection, and pilot analysis runs alongside pilot data collection. The roadmap shows these as overlapping bars. The 2 months after the last thesis data are for data summary, synthesis and formatting. The month after the last pilot data is for pilot data summary and synthesis.
 
 ## Features
 

@@ -31,6 +31,7 @@
     --phase-write: #d9a441;
     --phase-review: #23407a;
     --phase-read: #2b7c78;
+    --phase-synth: #c0714a;
     --band: #f1eee7;
     --radius: 14px;
     --shadow: 0 1px 2px rgba(20, 24, 33, .05), 0 8px 24px rgba(20, 24, 33, .06);
@@ -59,6 +60,7 @@
       --phase-write: #d9a441;
       --phase-review: #6f93d6;
       --phase-read: #4bb3ad;
+      --phase-synth: #e09a74;
       --band: #161b23;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
       color-scheme: dark;
@@ -86,6 +88,7 @@
     --phase-write: #d9a441;
     --phase-review: #6f93d6;
     --phase-read: #4bb3ad;
+    --phase-synth: #e09a74;
     --band: #161b23;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
     color-scheme: dark;
@@ -222,6 +225,7 @@
   .write { background: var(--phase-write); }
   .review { background: var(--phase-review); }
   .read { background: var(--phase-read); }
+  .synth { background: var(--phase-synth); }
   .today {
     position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1.5px;
     background: var(--ink); border-radius: 2px;
@@ -231,6 +235,8 @@
     font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
   }
   .bar-wrap.has-today { margin-top: 30px; }
+  .overlap-track { position: relative; height: 6px; margin-top: 4px; }
+  .overlap-track span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; }
   .legend { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 20px; }
   .legend li { display: flex; gap: 10px; align-items: flex-start; }
   .swatch { width: 12px; height: 12px; border-radius: 3px; margin-top: 5px; flex: none; }
@@ -496,12 +502,16 @@
     rule: "At least 2 months before the first full draft goes to your supervisor.",
     action: "finish data collection",
     lead: "Data collection", leadCls: "collect", leadNote: "Today until data collection must be complete",
-    next: "Analysis and writing", nextCls: "write"
+    next: "Data summary, synthesis and formatting", nextCls: "synth"
   };
+
+  /* Shown as a note for both degrees. */
+  var WRITING_NOTE = "Analysis and writing run alongside thesis data collection, not only after it. The 2 months after the last data are collected are for data summary, synthesis and formatting before the first full draft goes to your supervisor.";
 
   var PROGRAMS = {
     msc: {
       label: "M.Sc.",
+      note: WRITING_NOTE,
       milestones: [
         DATA_COLLECTION,
         {
@@ -528,7 +538,7 @@
     },
     phd: {
       label: "Ph.D.",
-      note: "Analysis and writing should run throughout thesis data collection, not only after it. They continue for 2 months after the last data are collected, until the first full draft goes to your supervisor.",
+      note: WRITING_NOTE,
       milestones: [
         DATA_COLLECTION,
         {
@@ -559,13 +569,13 @@
   var PROPOSAL_STEPS = [
     {
       id: "pilotStart", title: "Start pilot data collection", before: "pilotDone", offset: { months: 4 },
-      rule: "Pilot data collection takes one semester (about 4 months).", action: "start pilot data collection",
-      bar: "Pilot data collection", barCls: "collect"
+      rule: "Pilot data collection takes one semester (about 4 months). Analyse the pilot data as they come in.", action: "start pilot data collection",
+      bar: "Pilot data collection", barCls: "collect", overlap: { bar: "Pilot analysis", barCls: "analyze" }
     },
     {
       id: "pilotDone", title: "Pilot data collection complete", before: "writingStart", offset: { months: 1 },
-      rule: "Leave 1 month to analyse the pilot data before you start writing.",
-      bar: "Pilot analysis", barCls: "analyze"
+      rule: "Leave 1 month after the last pilot data to summarize and synthesize the results before you start writing.",
+      bar: "Pilot data summary and synthesis", barCls: "synth"
     },
     {
       id: "writingStart", title: "Start writing the proposal", before: "toCommittee", offset: { months: 2 },
@@ -983,6 +993,7 @@
     pre.forEach(function (it, i) {
       var to = i + 1 < r.pre.length ? r.pre[i + 1].date : r.proposal;
       html += row(it.bar, bar(it.date, to, it.barCls, it.bar + ": " + range(it.date, to)));
+      if (it.overlap) html += row(it.overlap.bar, bar(it.date, to, it.overlap.barCls, it.overlap.bar + ", alongside " + lowerFirst(it.bar) + ": " + range(it.date, to)));
     });
     html += row("Proposal meeting",
       '<span class="rm-window" style="left:' + pos(r.windowFrom).toFixed(2) + "%;width:" + (pos(addDays(r.windowTo, 1)) - pos(r.windowFrom)).toFixed(2) + '%" title="Lab window: ' + esc(r.windowText) + '"></span>' +
@@ -992,7 +1003,8 @@
     html += '<div class="rm-group">Thesis</div>';
     var th = r.thesis;
     var thesisRows = [
-      { label: "Thesis data collection", from: r.proposal, to: th[0].date, cls: "collect" }
+      { label: "Thesis data collection", from: r.proposal, to: th[0].date, cls: "collect" },
+      { label: "Analysis and writing", from: r.proposal, to: th[0].date, cls: "write" }
     ];
     for (var k = 0; k < th.length - 1; k++) {
       thesisRows.push({ label: th[k].next, from: th[k].date, to: th[k + 1].date, cls: th[k].nextCls });
@@ -1171,6 +1183,10 @@
       html += '<div class="seg ' + s.cls + '" style="flex:' + Math.max(d, 1) + ' 1 0" title="' + esc(s.label) + ": " + esc(span(d)) + '"></div>';
     });
     html += "</div>";
+    var overlap = segs.length && first.id === "dataCollection" && segs[0].to === first.date ? segs[0] : null;
+    if (overlap) {
+      html += '<div class="overlap-track" title="Analysis and writing, alongside data collection"><span class="write" style="width:' + (daysBetween(start, overlap.to) / total * 100).toFixed(2) + '%"></span></div>';
+    }
     if (showToday) {
       var pct = (daysBetween(start, now) / total) * 100;
       html += '<div class="today" style="left:' + pct.toFixed(2) + '%"><span>Today</span></div>';
@@ -1180,6 +1196,7 @@
       var d = Math.max(daysBetween(s.from, s.to), 0);
       html += '<li><i class="swatch ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
         esc(s.note || fmtShort.format(s.from) + " to " + fmtShort.format(s.to)) + "</span></div></li>";
+      if (s === overlap) html += '<li><i class="swatch write"></i><div><b>Analysis and writing</b><span>Alongside data collection, until ' + esc(fmtShort.format(s.to)) + "</span></div></li>";
     });
     html += "</ul>" + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
 
