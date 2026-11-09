@@ -2,6 +2,8 @@
 
 A one-page planner for graduate students in the Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University.
 
+Original idea by Jeff at the LAMP lab.
+
 Students choose M.Sc. or Ph.D. and where to start the countdown:
 
 - **Before my proposal.** A roadmap from the first term to the defence: coursework, directed research project, comprehensive exam (Ph.D.), the proposal countdown, and the thesis deadlines.
