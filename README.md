@@ -18,7 +18,7 @@ Students choose M.Sc. or Ph.D. and where to start the countdown:
 
 ## Proposal countdown (both degrees)
 
-Counted back from the proposal meeting: pilot data collection (8 weeks), pilot analysis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
+Counted back from the proposal meeting: pilot data collection (1 semester, about 4 months), pilot analysis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
 
 ## Thesis deadlines
 
