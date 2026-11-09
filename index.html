@@ -239,7 +239,7 @@
 
   /* Roadmap chart (before-proposal view) */
   .roadmap { padding: 20px 22px 18px; margin-bottom: 22px; }
-  .roadmap .note { margin: 12px 0 0; color: var(--muted); font-size: .85rem; }
+  .roadmap .note, .phases .note { margin: 12px 0 0; color: var(--muted); font-size: .85rem; }
   .rm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .rm { --lab: 170px; --n: 6; position: relative; padding: 0 12px 20px 0; min-width: calc(var(--lab) + var(--n) * 48px + 12px); }
   .rm-bands { position: absolute; top: 0; bottom: 20px; left: var(--lab); right: 12px; pointer-events: none; }
@@ -283,6 +283,7 @@
   .ms .rule { margin: 0; font-size: .92rem; }
   .ms .extra { margin: 6px 0 0; font-size: .88rem; }
   .ms .extra.bad { color: var(--danger); font-weight: 500; }
+  .ms .caveat { margin: 8px 0 0; padding-left: 10px; border-left: 3px solid var(--phase-write); font-size: .86rem; color: var(--muted); }
   .ms .moved { margin: 6px 0 0; font-size: .82rem; color: var(--muted); }
   .ms .links { margin: 8px 0 0; font-size: .85rem; }
   .ms .links a, .rules a { color: var(--accent); font-weight: 500; }
@@ -527,6 +528,7 @@
     },
     phd: {
       label: "Ph.D.",
+      note: "Analysis and writing should run throughout thesis data collection, not only after it. They continue for 2 months after the last data are collected, until the first full draft goes to your supervisor.",
       milestones: [
         DATA_COLLECTION,
         {
@@ -740,6 +742,7 @@
   /* ---------- Thesis timeline (counted back from the defence) ---------- */
   function compute(key, defence) {
     var items = resolve(PROGRAMS[key].milestones, { defence: defence });
+    if (PROGRAMS[key].note) items.forEach(function (it) { if (it.id === "dataCollection") it.caveat = PROGRAMS[key].note; });
     items.push({ id: "defence", title: "Thesis defence", rule: "Your planned defence date.", date: defence, raw: defence, isKey: true, isDefence: true });
     items.sort(function (a, b) { return a.date - b.date; });
     return items;
@@ -921,6 +924,7 @@
     html += '<p class="long">' + esc(fmtLong.format(it.date)) + "</p>";
     html += '<p class="rule">' + esc(it.rule) + "</p>";
     if (it.extra) html += '<p class="extra' + (it.extraBad ? " bad" : "") + '">' + esc(it.extra) + "</p>";
+    if (it.caveat) html += '<p class="caveat">Note: ' + esc(it.caveat) + "</p>";
     if (!it.isKey && !it.done && it.raw && daysBetween(it.raw, it.date) !== 0) {
       html += '<p class="moved">Moved from ' + esc(DAY_NAMES[it.raw.getDay()]) + " " + esc(fmtShort.format(it.raw)) + " because it falls on a weekend.</p>";
     }
@@ -1028,7 +1032,7 @@
         "<p>Choose your program start term and year above to put dates on this roadmap and get a dated list of deadlines.</p></div></div>";
       html += '<div class="card roadmap"><p class="eyebrow-sm">' + esc(prog.label) + " roadmap, " + esc(rm.lengthText) + "</p>" +
         roadmapChartHTML(r, now, true) +
-        '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Diamonds mark the proposal meeting and the defence.</p></div>';
+        '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Diamonds mark the proposal meeting and the defence.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
       results.innerHTML = html;
       return;
     }
@@ -1078,7 +1082,7 @@
     }
 
     html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false) +
-      '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Hover over a bar for its dates.</p></div>';
+      '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Hover over a bar for its dates.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
 
     // Dated list by stage
     var groups = [
@@ -1177,7 +1181,7 @@
       html += '<li><i class="swatch ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
         esc(s.note || fmtShort.format(s.from) + " to " + fmtShort.format(s.to)) + "</span></div></li>";
     });
-    html += "</ul></div>";
+    html += "</ul>" + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
 
     html += '<ol class="timeline">';
     items.forEach(function (it) { html += milestoneHTML(it, now, nextItem, false); });
@@ -1209,6 +1213,7 @@
     prog.milestones.forEach(function (m) {
       html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
     });
+    if (prog.note) html += "<li><strong>Note.</strong> " + esc(prog.note) + "</li>";
     if (MOVE_WEEKENDS_TO_FRIDAY) html += "<li>A deadline that lands on a weekend moves to the Friday before.</li>";
     html += "<li>These are minimum lead times. Sending drafts earlier gives your supervisor and committee more room.</li></ul>";
     var otherKey = key === "msc" ? "phd" : "msc";

@@ -29,6 +29,8 @@ Counted back from the proposal meeting: pilot data collection (1 semester, about
 
 A deadline that lands on a weekend moves to the Friday before. Students who have already finished data collection can tick a box so that milestone shows as finished and does not trigger a warning.
 
+For the Ph.D., analysis and writing run throughout thesis data collection and continue for 2 months after the last data are collected. The page shows this as a note.
+
 ## Features
 
 - Calendar export (.ics) with a one-week reminder before each deadline
