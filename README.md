@@ -2,9 +2,25 @@
 
 A one-page planner for graduate students in the Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University.
 
-Students choose M.Sc. or Ph.D. and enter their planned defence date. The page counts back from that date and lists the deadline for each milestone.
+Students choose M.Sc. or Ph.D. and where to start the countdown:
 
-## Rules
+- **Before my proposal.** A roadmap from the first term to the defence: coursework, directed research project, comprehensive exam (Ph.D.), the proposal countdown, and the thesis deadlines.
+- **After my proposal.** The thesis deadlines, counted back from the planned defence date.
+
+## Program roadmap
+
+| | M.Sc. (2 years, 6 terms) | Ph.D. (4 years, 12 terms) |
+|---|---|---|
+| Coursework | Year 1 | Year 1 |
+| Directed research project | Year 1 | Years 1 and 2 |
+| Comprehensive exam | | Starts term 3, finished within 18 months |
+| Thesis proposal | Fall or Winter of Year 2 | Fall of Year 3 |
+
+## Proposal countdown (both degrees)
+
+Counted back from the proposal meeting: pilot data collection (8 weeks), pilot analysis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
+
+## Thesis deadlines
 
 | Degree | Data collection complete | First full draft to supervisor | Thesis to committee |
 |---|---|---|---|
@@ -17,7 +33,7 @@ A deadline that lands on a weekend moves to the Friday before. Students who have
 
 - Calendar export (.ics) with a one-week reminder before each deadline
 - Print or save as PDF
-- Shareable link, for example `?degree=phd&defence=2027-06-15`
+- Shareable link, for example `?degree=phd&mode=pre&start=fall-2026` or `?degree=msc&mode=post&defence=2027-06-15`
 - Warning and earliest workable defence date when a deadline has already passed
 
 ## Guidebooks and forms
@@ -26,7 +42,7 @@ The bottom of the page links to the SGSPA supervision guidebooks (Setting Expect
 
 ## Changing the rules
 
-All rules live in the `PROGRAMS` block near the top of the script in `index.html`. Each milestone is set a fixed time before a later one:
+Thesis deadlines live in the `PROGRAMS` block near the top of the script in `index.html`. The proposal countdown lives in `PROPOSAL_STEPS` and the program roadmap in `ROADMAPS`. Each milestone is set a fixed time before a later one:
 
 ```js
 {

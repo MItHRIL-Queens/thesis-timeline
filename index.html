@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thesis Timeline Planner</title>
-<meta name="description" content="Enter your degree and planned defence date to get the M.Sc. or Ph.D. thesis deadlines you need to meet. Sensorimotor Exploration Laboratory, Queen's University.">
+<meta name="description" content="M.Sc. and Ph.D. roadmaps and thesis deadlines for the Sensorimotor Exploration Laboratory, Queen's University. Start from your first term or count back from your defence.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
@@ -23,12 +23,15 @@
     --danger-bg: #fdecea;
     --warn: #8a5200;
     --warn-bg: #fff3dc;
+    --ok: #2e7d4f;
+    --ok-bg: #e4f3e9;
+    --phase-early: #7d8ba3;
+    --phase-collect: #7a4d8c;
+    --phase-analyze: #7f97c7;
     --phase-write: #d9a441;
     --phase-review: #23407a;
     --phase-read: #2b7c78;
-    --phase-extra: #7a4d8c;
-    --ok: #2e7d4f;
-    --ok-bg: #e4f3e9;
+    --band: #f1eee7;
     --radius: 14px;
     --shadow: 0 1px 2px rgba(20, 24, 33, .05), 0 8px 24px rgba(20, 24, 33, .06);
     color-scheme: light;
@@ -48,12 +51,15 @@
       --danger-bg: #3a1d1b;
       --warn: #f0c27a;
       --warn-bg: #3a2c14;
+      --ok: #7fd19b;
+      --ok-bg: #1c3324;
+      --phase-early: #8e9bb2;
+      --phase-collect: #b488c6;
+      --phase-analyze: #a9bde6;
       --phase-write: #d9a441;
       --phase-review: #6f93d6;
       --phase-read: #4bb3ad;
-      --phase-extra: #b488c6;
-      --ok: #7fd19b;
-      --ok-bg: #1c3324;
+      --band: #161b23;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
       color-scheme: dark;
     }
@@ -72,12 +78,15 @@
     --danger-bg: #3a1d1b;
     --warn: #f0c27a;
     --warn-bg: #3a2c14;
+    --ok: #7fd19b;
+    --ok-bg: #1c3324;
+    --phase-early: #8e9bb2;
+    --phase-collect: #b488c6;
+    --phase-analyze: #a9bde6;
     --phase-write: #d9a441;
     --phase-review: #6f93d6;
     --phase-read: #4bb3ad;
-    --phase-extra: #b488c6;
-    --ok: #7fd19b;
-    --ok-bg: #1c3324;
+    --band: #161b23;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
     color-scheme: dark;
   }
@@ -92,8 +101,7 @@
     font-size: 16px;
     line-height: 1.55;
   }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
-  .serif { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
 
   header.site { padding: 48px 0 24px; }
   .eyebrow {
@@ -111,7 +119,7 @@
     margin: .35rem 0 .6rem;
     letter-spacing: -.01em;
   }
-  .lede { margin: 0; color: var(--muted); max-width: 60ch; font-size: 1.05rem; }
+  .lede { margin: 0; color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
 
   .card {
     background: var(--surface);
@@ -119,23 +127,25 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
   }
+  .eyebrow-sm { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight: 600; }
 
   /* Form */
   .form { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
-  .degree { grid-column: 1 / -1; border: 0; margin: 0; padding: 0; min-width: 0; }
-  .degree-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form [hidden] { display: none !important; }
+  .choices { grid-column: 1 / -1; border: 0; margin: 0; padding: 0; min-width: 0; }
+  .choice-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   legend, .field > label { display: block; font-weight: 600; font-size: .9rem; margin: 0 0 8px; padding: 0; }
   .choice { position: relative; display: block; cursor: pointer; }
   .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .choice span {
-    display: flex; flex-direction: column; gap: 2px;
+    display: flex; flex-direction: column; gap: 2px; height: 100%;
     padding: 14px 16px;
     border: 1.5px solid var(--line);
     border-radius: 12px;
     background: var(--surface-2);
     transition: border-color .15s, background .15s, box-shadow .15s;
   }
-  .choice strong { font-size: 1.15rem; }
+  .choice strong { font-size: 1.1rem; }
   .choice small { color: var(--muted); font-size: .85rem; }
   .choice:hover span { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
   .choice input:checked + span {
@@ -145,9 +155,9 @@
   }
   .choice input:focus-visible + span { outline: 3px solid color-mix(in srgb, var(--accent) 40%, transparent); outline-offset: 2px; }
   .field { min-width: 0; }
-  .field input {
-    width: 100%;
+  .field input, .field select {
     font: inherit;
+    width: 100%;
     padding: 11px 12px;
     border: 1.5px solid var(--line);
     border-radius: 10px;
@@ -155,10 +165,11 @@
     color: var(--ink);
     min-height: 46px;
   }
-  .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .start-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; }
   .hint { margin: 6px 0 0; color: var(--muted); font-size: .85rem; }
   .opt { font-weight: 400; color: var(--muted); }
-  .check-field { grid-column: 1 / -1; margin-top: -4px; }
+  .check-field { align-self: center; }
   .field > label.check { display: inline-flex; align-items: center; gap: 10px; margin: 0; font-weight: 500; font-size: .95rem; cursor: pointer; }
   .field .check input { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 0; accent-color: var(--accent); flex: none; }
 
@@ -195,18 +206,22 @@
   .alert { padding: 14px 16px; border-radius: 12px; margin: 0 0 18px; border: 1px solid; }
   .alert.danger { background: var(--danger-bg); border-color: color-mix(in srgb, var(--danger) 35%, transparent); }
   .alert.danger strong { color: var(--danger); }
+  .alert.warn { background: var(--warn-bg); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+  .alert.warn strong { color: var(--warn); }
   .alert p { margin: 0; }
   .alert p + p { margin-top: 6px; }
 
+  /* Phase bar (after-proposal view) */
   .phases { padding: 20px 22px; margin-bottom: 22px; }
-  .phases h3, .rules h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight: 600; }
   .bar-wrap { position: relative; padding: 4px 0; }
   .bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--line); gap: 2px; }
   .seg { height: 100%; min-width: 4px; }
-  .seg.write { background: var(--phase-write); }
-  .seg.review { background: var(--phase-review); }
-  .seg.read { background: var(--phase-read); }
-  .seg.extra, .seg.collect { background: var(--phase-extra); }
+  .early { background: var(--phase-early); }
+  .collect { background: var(--phase-collect); }
+  .analyze { background: var(--phase-analyze); }
+  .write { background: var(--phase-write); }
+  .review { background: var(--phase-review); }
+  .read { background: var(--phase-read); }
   .today {
     position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1.5px;
     background: var(--ink); border-radius: 2px;
@@ -222,6 +237,29 @@
   .legend b { display: block; font-size: .95rem; font-weight: 600; }
   .legend span { color: var(--muted); font-size: .85rem; }
 
+  /* Roadmap chart (before-proposal view) */
+  .roadmap { padding: 20px 22px 18px; margin-bottom: 22px; }
+  .roadmap .note { margin: 12px 0 0; color: var(--muted); font-size: .85rem; }
+  .rm-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .rm { --lab: 170px; --n: 6; position: relative; padding: 0 12px 20px 0; min-width: calc(var(--lab) + var(--n) * 48px + 12px); }
+  .rm-bands { position: absolute; top: 0; bottom: 20px; left: var(--lab); right: 12px; pointer-events: none; }
+  .rm-band { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--line); }
+  .rm-band.alt { background: var(--band); }
+  .rm-now { position: absolute; top: 0; bottom: -4px; width: 2px; margin-left: -1px; background: var(--ink); }
+  .rm-now span { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  .rm-row { position: relative; display: grid; grid-template-columns: var(--lab) 1fr; align-items: center; }
+  .rm-label { font-size: .84rem; line-height: 1.25; padding: 4px 12px 4px 0; }
+  .rm-track { position: relative; height: 28px; }
+  .rm-head .rm-track { height: 50px; }
+  .rm-year { position: absolute; top: 2px; padding-left: 6px; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  .rm-term { position: absolute; top: 20px; padding-left: 6px; font-size: .68rem; line-height: 1.25; color: var(--muted); white-space: nowrap; overflow: hidden; }
+  .rm-group { position: relative; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 12px 0 2px; }
+  .rm-bar { position: absolute; top: 8px; height: 12px; border-radius: 6px; min-width: 6px; }
+  .rm-window { position: absolute; top: 6px; height: 16px; border-radius: 8px; border: 1.5px dashed var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+  .rm-diamond { position: absolute; top: 7px; width: 14px; height: 14px; margin-left: -7px; background: var(--gold); transform: rotate(45deg); border-radius: 2px; box-shadow: 0 0 0 2px var(--surface); }
+  .rm-diamond.defence { background: var(--accent); }
+
+  /* Milestone list */
   .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
   .timeline::before { content: ""; position: absolute; left: 43px; top: 20px; bottom: 20px; width: 2px; background: var(--line); }
   .ms { display: grid; grid-template-columns: 88px 1fr; gap: 16px; align-items: start; padding: 0 0 16px; position: relative; }
@@ -237,13 +275,17 @@
   .date .dow { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .date .day { display: block; font-family: "Source Serif 4", Georgia, serif; font-size: 1.9rem; font-weight: 700; line-height: 1.05; }
   .date .my { display: block; font-size: .75rem; color: var(--muted); }
-  .ms.is-defence .date { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--surface)); }
-  .ms.is-past .date { opacity: .7; }
-  .ms .body { padding: 14px 18px 16px; }
-  .ms h3 { margin: 0; font-size: 1.06rem; line-height: 1.3; }
+  .ms.is-key .date { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--surface)); }
+  .ms.is-past .date, .ms.is-done .date { opacity: .7; }
+  .ms .body { padding: 14px 18px 16px; min-width: 0; }
+  .ms h3 { margin: 0; font-size: 1.06rem; line-height: 1.35; }
   .ms .long { margin: 2px 0 8px; color: var(--muted); font-size: .9rem; }
   .ms .rule { margin: 0; font-size: .92rem; }
+  .ms .extra { margin: 6px 0 0; font-size: .88rem; }
+  .ms .extra.bad { color: var(--danger); font-weight: 500; }
   .ms .moved { margin: 6px 0 0; font-size: .82rem; color: var(--muted); }
+  .ms .links { margin: 8px 0 0; font-size: .85rem; }
+  .ms .links a, .rules a { color: var(--accent); font-weight: 500; }
   .chip {
     display: inline-block; margin-top: 10px;
     padding: 3px 10px; border-radius: 999px;
@@ -253,20 +295,27 @@
   }
   .chip.soon { background: var(--warn-bg); color: var(--warn); }
   .chip.past { background: var(--danger-bg); color: var(--danger); }
-  .chip.defence { background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold); }
+  .chip.earlier { background: color-mix(in srgb, var(--muted) 14%, transparent); color: var(--muted); }
+  .chip.key { background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold); }
   .chip.done { background: var(--ok-bg); color: var(--ok); }
-  .ms.is-done .date { opacity: .7; }
-  .next-tag { display: inline-block; margin-left: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); vertical-align: 2px; }
+  .next-tag, .tag { display: inline-block; margin-left: 8px; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; vertical-align: 2px; }
+  .next-tag { color: var(--gold); }
+  .tag { color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+  .list-group { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 26px 0 12px 104px; }
+  .list-group:first-child { margin-top: 0; }
 
   .rules { padding: 22px; margin: 28px 0 0; }
+  .rules h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight: 600; }
+  .rules h3 { font-size: .95rem; font-weight: 600; margin: 18px 0 6px; }
+  .rules h3:first-of-type { margin-top: 0; }
   .rules ul { margin: 0; padding-left: 20px; }
   .rules li + li { margin-top: 6px; }
-  .rules .compare { margin-top: 16px; color: var(--muted); font-size: .9rem; }
+  .rules .compare { margin: 16px 0 0; color: var(--muted); font-size: .9rem; }
 
   .resources { padding: 22px; margin: 28px 0 0; }
   .resources h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight: 600; }
   .resources h3 { font-size: .95rem; font-weight: 600; margin: 0 0 8px; }
-  .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px 28px; }
+  .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 20px 28px; }
   .res-grid ul { list-style: none; margin: 0; padding: 0; }
   .res-grid li { font-size: .92rem; }
   .res-grid li + li { margin-top: 7px; }
@@ -281,22 +330,27 @@
   @media (max-width: 640px) {
     header.site { padding: 32px 0 20px; }
     .form { grid-template-columns: 1fr; padding: 20px; }
+    .choice-options { grid-template-columns: 1fr; }
     .summary { flex-direction: column; align-items: stretch; }
     .actions .btn { flex: 1 1 auto; justify-content: center; }
     .ms { grid-template-columns: 70px 1fr; gap: 12px; }
     .timeline::before { left: 34px; }
     .date .day { font-size: 1.6rem; }
     .ms .body { padding: 12px 14px 14px; }
-    .phases { padding: 18px 16px; }
+    .phases, .roadmap { padding: 18px 14px; }
+    .rm { --lab: 118px; }
+    .rm-label { font-size: .76rem; }
+    .list-group { margin-left: 82px; }
   }
 
   @media print {
-    body { background: #fff; color: #000; font-size: 12pt; }
+    body { background: #fff; color: #000; font-size: 11pt; }
     header.site { padding: 0 0 12px; }
     .lede, #planner, .actions, .alert .linkbtn, footer.site, .resources { display: none !important; }
     .card { box-shadow: none; border-color: #ccc; }
     .print-only { display: block; margin: 0 0 12px; color: #444; }
-    .ms, .phases, .rules { break-inside: avoid; }
+    .ms, .phases, .roadmap, .rules { break-inside: avoid; }
+    .rm-scroll { overflow: visible; }
     #results { margin-top: 8px; }
   }
 </style>
@@ -306,36 +360,62 @@
     <div class="wrap">
       <p class="eyebrow">Sensorimotor Exploration Laboratory &middot; Queen's University</p>
       <h1>Thesis Timeline Planner</h1>
-      <p class="lede">Choose your degree and enter the date you plan to defend. The planner counts back from that date and gives you the deadline for each milestone.</p>
+      <p class="lede">Choose your degree and where you are in it. Before your proposal, the planner lays out a roadmap from your first term to your defence. After your proposal, it counts back from your defence to each thesis deadline.</p>
     </div>
   </header>
 
   <main class="wrap">
     <form id="planner" class="card form" novalidate autocomplete="off">
-      <fieldset class="degree">
+      <fieldset class="choices">
         <legend>Degree</legend>
-        <div class="degree-options">
+        <div class="choice-options">
           <label class="choice">
             <input type="radio" name="degree" value="msc" checked>
-            <span><strong>M.Sc.</strong><small>Master's thesis</small></span>
+            <span><strong>M.Sc.</strong><small>Master's thesis, 2 years</small></span>
           </label>
           <label class="choice">
             <input type="radio" name="degree" value="phd">
-            <span><strong>Ph.D.</strong><small>Doctoral thesis</small></span>
+            <span><strong>Ph.D.</strong><small>Doctoral thesis, 4 years</small></span>
           </label>
         </div>
       </fieldset>
+      <fieldset class="choices">
+        <legend>Start the countdown from</legend>
+        <div class="choice-options">
+          <label class="choice">
+            <input type="radio" name="mode" value="pre" checked>
+            <span><strong>Before my proposal</strong><small>Full roadmap from your first term</small></span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="mode" value="post">
+            <span><strong>After my proposal</strong><small>Thesis deadlines only</small></span>
+          </label>
+        </div>
+      </fieldset>
+      <div class="field" data-mode="pre">
+        <label for="startTerm">Program start</label>
+        <div class="start-row">
+          <select id="startTerm" aria-label="Start term">
+            <option value="">Term</option>
+            <option value="fall">Fall (September)</option>
+            <option value="winter">Winter (January)</option>
+            <option value="summer">Summer (May)</option>
+          </select>
+          <select id="startYear" aria-label="Start year"><option value="">Year</option></select>
+        </div>
+        <p class="hint">The term you started, or will start, your degree.</p>
+      </div>
+      <div class="field" data-mode="pre">
+        <label for="proposal">Planned proposal date <span class="opt">(optional)</span></label>
+        <input type="date" id="proposal" name="proposal" min="2000-01-01" max="2100-12-31">
+        <p class="hint" id="proposalHint">Leave blank to use the lab's default.</p>
+      </div>
       <div class="field">
-        <label for="defence">Planned defence date</label>
+        <label for="defence">Planned defence date <span class="opt" id="defenceOpt">(optional)</span></label>
         <input type="date" id="defence" name="defence" min="2000-01-01" max="2100-12-31">
-        <p class="hint">The date you expect to defend and finish your degree. Every deadline counts back from it.</p>
+        <p class="hint" id="defenceHint">The date you expect to defend and finish your degree.</p>
       </div>
-      <div class="field">
-        <label for="name">Your name <span class="opt">(optional)</span></label>
-        <input type="text" id="name" name="name" placeholder="Shown on the printout and calendar">
-        <p class="hint">Stays in your browser. It is not saved or sent anywhere.</p>
-      </div>
-      <div class="field check-field">
+      <div class="field check-field" data-mode="post">
         <label class="check"><input type="checkbox" id="dataDone" name="dataDone" value="dataCollection"><span>My data collection is already finished</span></label>
       </div>
     </form>
@@ -354,6 +434,16 @@
             <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/Productive_Supervisory_Relationships.pdf" target="_blank" rel="noopener">Productive Supervisory Relationships</a><span>One-page conversation guide</span></li>
             <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/Thesis%20Completion/Graduate%20Supervision%20Handbook_revised_November2024_0.pdf" target="_blank" rel="noopener">Graduate Supervision Handbook</a><span>Roles, resources and policies</span></li>
             <li><a href="https://www.queensu.ca/secretariat/policies/senate/graduate-supervision-policy" target="_blank" rel="noopener">Graduate Supervision Policy</a><span>Senate policy</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Proposal and comprehensive exam</h3>
+          <ul>
+            <li><a href="https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Thesis%20forms/SKHS%20Thesis%20Proposal%20Form.pdf" target="_blank" rel="noopener">SKHS Thesis Proposal Form</a></li>
+            <li><a href="https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Thesis%20Advisory%20Comm%20Thesis%20Proposal%20Amendment%20Form%2025Feb2019_0.pdf" target="_blank" rel="noopener">Thesis Proposal Amendment Form</a></li>
+            <li><a href="https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Science_PhDComprehensiveExam_TimelineForm_Instructions.pdf" target="_blank" rel="noopener">Ph.D. Comprehensive Exam timeline (Science)</a></li>
+            <li><a href="https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/MSc%20Student%20Progress%20Report.pdf" target="_blank" rel="noopener">M.Sc. Student Progress Report</a></li>
+            <li><a href="https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Doctoral%20Student%20Progress%20Report.pdf" target="_blank" rel="noopener">Doctoral Student Progress Report</a></li>
           </ul>
         </div>
         <div>
@@ -383,7 +473,7 @@
 
   <footer class="site">
     <div class="wrap">
-      <p>Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University. Talk with your supervisor before you lock in a defence date.</p>
+      <p>Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University. Talk with your supervisor before you lock in a proposal or defence date.</p>
     </div>
   </footer>
 
@@ -391,19 +481,15 @@
 (function () {
   "use strict";
 
-  /* ------------------------------------------------------------------
-     Planner rules. Edit this block to change the timeline.
-     Each milestone is set a fixed time before a later milestone.
-     "before" names the later milestone ("defence" is the date the
-     student enters). Offsets can use months, weeks or days.
-     "action" completes the sentence "If you ... today".
-     "lead" labels the time from today until the milestone.
-     "next" labels the window that follows the milestone.
-     The *Cls fields pick the bar colour: collect, write, review, read.
-     ------------------------------------------------------------------ */
+  /* ==================================================================
+     PLANNER RULES. Edit these blocks to change the timelines.
+     ================================================================== */
+
+  /* Thesis deadlines, counted back from the defence.
+     "before" names the later milestone. Offsets use months, weeks or days. */
   var DATA_COLLECTION = {
     id: "dataCollection",
-    title: "Data collection complete",
+    title: "Thesis data collection complete",
     before: "firstDraft",
     offset: { months: 2 },
     rule: "At least 2 months before the first full draft goes to your supervisor.",
@@ -467,28 +553,109 @@
     }
   };
 
-  var DEFENCE = {
-    id: "defence", title: "Thesis defence", rule: "Your planned defence date.",
-    lead: "Time until your defence", leadCls: "read", leadNote: "Today until the defence"
+  /* Steps before the proposal meeting, counted back from it. Same for both degrees. */
+  var PROPOSAL_STEPS = [
+    {
+      id: "pilotStart", title: "Start pilot data collection", before: "pilotDone", offset: { weeks: 8 },
+      rule: "Pilot data collection takes about 8 weeks.", action: "start pilot data collection",
+      bar: "Pilot data collection", barCls: "collect"
+    },
+    {
+      id: "pilotDone", title: "Pilot data collection complete", before: "writingStart", offset: { months: 1 },
+      rule: "Leave 1 month to analyse the pilot data before you start writing.",
+      bar: "Pilot analysis", barCls: "analyze"
+    },
+    {
+      id: "writingStart", title: "Start writing the proposal", before: "toCommittee", offset: { months: 2 },
+      rule: "Pilot analysis is done. Proposal writing and revisions with your supervisor take 1 to 2 months. The planner allows 2.",
+      bar: "Proposal writing and revisions", barCls: "write"
+    },
+    {
+      id: "toCommittee", title: "Proposal to committee", before: "proposal", offset: { months: 2 },
+      rule: "At least 2 months before the proposal meeting. Your Thesis Advisory Committee must be formed by now.",
+      bar: "Committee reads the proposal", barCls: "read", links: ["proposalForm"]
+    }
+  ];
+
+  /* Program roadmap, counted forward from the first term.
+     Terms are numbered from 1. Year 1 is terms 1 to 3. */
+  var ROADMAPS = {
+    msc: {
+      terms: 6,
+      lengthText: "2 academic years (6 terms)",
+      proposalTerms: [4, 5],
+      proposalText: "the Fall or Winter term of Year 2",
+      items: [
+        {
+          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 2,
+          rule: "Finish the equivalent of four one-term graduate courses in Year 1."
+        },
+        {
+          id: "drp", title: "Directed research project complete", bar: "Directed research project", fromTerm: 1, toTerm: 3,
+          rule: "Complete a directed research project in Year 1. Pilot data for your thesis follows from the proposal countdown below."
+        }
+      ]
+    },
+    phd: {
+      terms: 12,
+      lengthText: "4 academic years (12 terms)",
+      proposalTerms: [7],
+      proposalText: "the Fall term of Year 3",
+      items: [
+        {
+          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 2,
+          rule: "Finish the equivalent of six one-term graduate courses in Year 1. Two must be taken in SKHS."
+        },
+        {
+          id: "drp", title: "Directed research project complete", bar: "Directed research project", fromTerm: 1, toTerm: 6,
+          rule: "Complete a directed research project during Years 1 and 2."
+        },
+        {
+          id: "comps", title: "Comprehensive exam complete", bar: "Comprehensive exam", fromTerm: 3, dueMonths: 18,
+          rule: "The comprehensive exam starts in your third term. SKHS expects it finished within 18 months of starting the program. The three written answers take about 3 months, and the oral exam follows within 2 weeks.",
+          links: ["compsForm"]
+        }
+      ]
+    }
   };
+
+  /* Proposal default: this day of the last month of the first proposal term. */
+  var DEFAULT_PROPOSAL_DAY = 15;
 
   /* Deadlines that land on a Saturday or Sunday move to the Friday before. */
   var MOVE_WEEKENDS_TO_FRIDAY = true;
 
-  /* ------------------------------------------------------------------ */
+  var LINKS = {
+    proposalForm: { label: "SKHS Thesis Proposal Form", url: "https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Thesis%20forms/SKHS%20Thesis%20Proposal%20Form.pdf" },
+    compsForm: { label: "Ph.D. Comprehensive Exam timeline (Science)", url: "https://skhs.queensu.ca/sites/skhswww/files/uploaded_files/Grad%20Files/Science_PhDComprehensiveExam_TimelineForm_Instructions.pdf" }
+  };
+
+  /* ================================================================== */
 
   var DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  var TERM_INFO = {
+    winter: { idx: 0, month: 0, name: "Winter" },
+    summer: { idx: 1, month: 4, name: "Summer" },
+    fall: { idx: 2, month: 8, name: "Fall" }
+  };
+  var TERM_ORDER = ["winter", "summer", "fall"];
 
   var fmtLong = new Intl.DateTimeFormat("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
   var fmtShort = new Intl.DateTimeFormat("en-CA", { month: "short", day: "numeric" });
   var fmtShortYear = new Intl.DateTimeFormat("en-CA", { month: "short", day: "numeric", year: "numeric" });
+  var fmtMonthDay = new Intl.DateTimeFormat("en-CA", { month: "long", day: "numeric" });
   var fmtDow = new Intl.DateTimeFormat("en-CA", { weekday: "short" });
   var fmtMonthYear = new Intl.DateTimeFormat("en-CA", { month: "short", year: "numeric" });
 
   var form = document.getElementById("planner");
   var defenceInput = document.getElementById("defence");
-  var nameInput = document.getElementById("name");
+  var proposalInput = document.getElementById("proposal");
+  var startTermInput = document.getElementById("startTerm");
+  var startYearInput = document.getElementById("startYear");
   var dataDoneInput = document.getElementById("dataDone");
+  var proposalHint = document.getElementById("proposalHint");
+  var defenceHint = document.getElementById("defenceHint");
+  var defenceOpt = document.getElementById("defenceOpt");
   var results = document.getElementById("results");
   var rulesBox = document.getElementById("rules");
   var lastItems = null;
@@ -529,6 +696,7 @@
     if (w === 0) return addDays(d, -2);
     return d;
   }
+  function shift(d) { return MOVE_WEEKENDS_TO_FRIDAY ? toFridayIfWeekend(d) : d; }
   function daysBetween(a, b) {
     var ua = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
     var ub = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
@@ -536,26 +704,49 @@
   }
   function isWeekday(d) { var w = d.getDay(); return w !== 0 && w !== 6; }
 
-  /* ---------- Timeline calculation ---------- */
-  function compute(key, defence) {
-    var prog = PROGRAMS[key];
-    var dates = { defence: { date: defence, raw: defence } };
-    var pending = prog.milestones.slice();
+  /* Program terms, numbered from 1. */
+  function makeTerms(startYear, startKey, count) {
+    var a0 = startYear * 3 + TERM_INFO[startKey].idx;
+    var list = [];
+    for (var k = 0; k < count; k++) {
+      var a = a0 + k, y = Math.floor(a / 3), key = TERM_ORDER[a % 3], m = TERM_INFO[key].month;
+      list.push({
+        n: k + 1, year: y, name: TERM_INFO[key].name, progYear: Math.floor(k / 3) + 1,
+        start: new Date(y, m, 1), end: new Date(y, m + 4, 0),
+        label: TERM_INFO[key].name + " " + y
+      });
+    }
+    return list;
+  }
+
+  /* Resolve milestones that are each set a fixed time before a later one. */
+  function resolve(steps, roots) {
+    var dates = {};
+    Object.keys(roots).forEach(function (k) { dates[k] = { date: roots[k], raw: roots[k] }; });
+    var pending = steps.slice();
     var guard = 0;
     while (pending.length && guard++ < 50) {
       pending = pending.filter(function (m) {
         var anchor = dates[m.before];
         if (!anchor) return true;
         var raw = subtractOffset(anchor.date, m.offset);
-        var date = MOVE_WEEKENDS_TO_FRIDAY ? toFridayIfWeekend(raw) : raw;
-        dates[m.id] = { date: date, raw: raw };
+        dates[m.id] = { date: shift(raw), raw: raw };
         return false;
       });
     }
-    var items = prog.milestones.map(function (m) {
-      return Object.assign({}, m, dates[m.id]);
-    });
-    items.push(Object.assign({}, DEFENCE, { date: defence, raw: defence, isDefence: true }));
+    return steps.map(function (m) { return Object.assign({}, m, dates[m.id]); });
+  }
+
+  /* ---------- Thesis timeline (counted back from the defence) ---------- */
+  function compute(key, defence) {
+    var items = resolve(PROGRAMS[key].milestones, { defence: defence });
+    items.push({ id: "defence", title: "Thesis defence", rule: "Your planned defence date.", date: defence, raw: defence, isKey: true, isDefence: true });
+    items.sort(function (a, b) { return a.date - b.date; });
+    return items;
+  }
+
+  function computeProposal(proposal) {
+    var items = resolve(PROPOSAL_STEPS, { proposal: proposal });
     items.sort(function (a, b) { return a.date - b.date; });
     return items;
   }
@@ -576,8 +767,65 @@
     return null;
   }
 
-  function doneSet() {
-    return dataDoneInput.checked ? { dataCollection: true } : {};
+  /* Earliest weekday proposal whose pilot start is today or later. */
+  function earliestProposal(from) {
+    var c = addDays(from, 1);
+    for (var i = 0; i < 1500; i++) {
+      if (isWeekday(c) && computeProposal(c)[0].date >= from) return c;
+      c = addDays(c, 1);
+    }
+    return null;
+  }
+
+  /* ---------- Roadmap (counted forward from the first term) ---------- */
+  function yearsTag(fromTerm, toTerm) {
+    var a = Math.ceil(fromTerm / 3), b = Math.ceil(toTerm / 3);
+    return a === b ? "Year " + a : "Years " + a + " and " + b;
+  }
+
+  function computeRoadmap(key, startYear, startKey, proposalIn, defenceIn) {
+    var rm = ROADMAPS[key];
+    var terms = makeTerms(startYear, startKey, rm.terms + 9);
+    var programEnd = terms[rm.terms - 1].end;
+
+    var program = rm.items.map(function (it) {
+      var from = terms[it.fromTerm - 1].start;
+      var raw = it.dueMonths ? addDays(addMonths(terms[0].start, it.dueMonths), -1) : terms[it.toTerm - 1].end;
+      var tag = it.dueMonths ? "Term " + it.fromTerm + " to month " + it.dueMonths : yearsTag(it.fromTerm, it.toTerm);
+      return Object.assign({}, it, { from: from, raw: raw, date: shift(raw), tag: tag, group: "program" });
+    });
+
+    var pTerms = rm.proposalTerms.map(function (n) { return terms[n - 1]; });
+    var windowFrom = pTerms[0].start, windowTo = pTerms[pTerms.length - 1].end;
+    var windowText = pTerms.map(function (t) { return t.label; }).join(" or ");
+    var proposalDefault = shift(new Date(pTerms[0].end.getFullYear(), pTerms[0].end.getMonth(), DEFAULT_PROPOSAL_DAY));
+    var proposal = proposalIn || proposalDefault;
+
+    var pre = computeProposal(proposal).map(function (it) { return Object.assign(it, { group: "proposal" }); });
+    pre.push({
+      id: "proposal", title: "Thesis proposal meeting", date: proposal, raw: proposal, isKey: true, group: "proposal",
+      tag: windowText,
+      rule: "Your lab plans the proposal for " + rm.proposalText + " (" + windowText + "). Thesis data collection starts after the proposal is approved.",
+      links: ["proposalForm"]
+    });
+
+    var defenceDefault = shift(programEnd);
+    var defence = defenceIn || defenceDefault;
+    var thesis = compute(PROGRAMS[key] ? key : "msc", defence).map(function (it) { return Object.assign(it, { group: "thesis" }); });
+    var dc = thesis.filter(function (it) { return it.id === "dataCollection"; })[0];
+    var dcDays = daysBetween(proposal, dc.date);
+    dc.extra = dcDays > 0
+      ? "This leaves " + span(dcDays) + " for thesis data collection after your proposal."
+      : "This is before your proposal. There is no time for thesis data collection.";
+    dc.extraBad = dcDays <= 0;
+
+    return {
+      terms: terms, programEnd: programEnd, program: program, pre: pre, thesis: thesis,
+      proposal: proposal, proposalDefault: proposalDefault, usingProposalDefault: !proposalIn,
+      defence: defence, defenceDefault: defenceDefault, usingDefenceDefault: !defenceIn,
+      windowFrom: windowFrom, windowTo: windowTo, windowText: windowText, pTerms: pTerms,
+      dataCollection: dc, dcDays: dcDays
+    };
   }
 
   /* ---------- Text helpers ---------- */
@@ -597,8 +845,7 @@
   }
   function span(days) {
     if (days < 14) return plural(days, "day");
-    var w = Math.round(days / 7);
-    return plural(w, "week");
+    return plural(Math.round(days / 7), "week");
   }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -606,48 +853,263 @@
     });
   }
   function lowerFirst(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+  function linksHTML(keys) {
+    var parts = (keys || []).filter(function (k) { return LINKS[k]; }).map(function (k) {
+      return '<a href="' + esc(LINKS[k].url) + '" target="_blank" rel="noopener">' + esc(LINKS[k].label) + "</a>";
+    });
+    return parts.length ? '<p class="links">' + parts.join(" &middot; ") + "</p>" : "";
+  }
 
-  /* ---------- Rendering ---------- */
+  /* ---------- Form state ---------- */
   function currentKey() {
     var checked = form.querySelector('input[name="degree"]:checked');
     return checked && PROGRAMS[checked.value] ? checked.value : "msc";
   }
-
-  function renderRules(key) {
-    var prog = PROGRAMS[key];
-    var html = '<h2 id="rules-title">How the ' + esc(prog.label) + ' dates are set</h2><ul>';
-    prog.milestones.forEach(function (m) {
-      html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
+  function currentMode() {
+    var checked = form.querySelector('input[name="mode"]:checked');
+    return checked ? checked.value : "pre";
+  }
+  function readStart() {
+    var y = parseInt(startYearInput.value, 10), t = startTermInput.value;
+    return y && TERM_INFO[t] ? { year: y, term: t } : null;
+  }
+  function fillYears() {
+    var now = new Date().getFullYear();
+    for (var y = now - 6; y <= now + 2; y++) {
+      var o = document.createElement("option");
+      o.value = String(y); o.textContent = String(y);
+      startYearInput.appendChild(o);
+    }
+  }
+  function applyMode(mode) {
+    form.querySelectorAll("[data-mode]").forEach(function (el) {
+      el.hidden = el.getAttribute("data-mode") !== mode;
     });
-    if (MOVE_WEEKENDS_TO_FRIDAY) html += "<li>A deadline that lands on a weekend moves to the Friday before.</li>";
-    html += "<li>These are minimum lead times. Sending drafts earlier gives your supervisor and committee more room.</li></ul>";
-    var otherKey = key === "msc" ? "phd" : "msc";
-    var other = PROGRAMS[otherKey];
-    html += '<p class="compare">' + esc(other.label) + " rules: " +
-      other.milestones.map(function (m) { return lowerFirst(m.title) + ", " + lowerFirst(m.rule.replace(/\.$/, "")); }).join("; ") + ".</p>";
-    rulesBox.innerHTML = html;
+    defenceOpt.hidden = mode !== "pre";
   }
 
+  /* ---------- Rendering helpers ---------- */
   var ICONS = {
     cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
     print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
     link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
   };
 
-  function render() {
-    var key = currentKey();
+  function actionsHTML() {
+    return '<div class="actions">' +
+      '<button type="button" class="btn primary" data-action="ics">' + ICONS.cal + "Add to calendar</button>" +
+      '<button type="button" class="btn" data-action="print">' + ICONS.print + "Print or save PDF</button>" +
+      '<button type="button" class="btn" data-action="copy">' + ICONS.link + '<span>Copy link</span></button>' +
+      "</div>";
+  }
+
+  function milestoneHTML(it, now, nextItem, softPast) {
+    var days = daysBetween(now, it.date);
+    var cd = countdown(days);
+    var past = days < 0;
+    var cls = "ms" + (it.isKey ? " is-key" : "") + (past ? " is-past" : "");
+    var chipCls = cd.cls, chipText = cd.text;
+    if (past && softPast) { chipCls = "earlier"; chipText = "Passed"; }
+    if (it.isKey && !past) { chipCls = "key"; chipText = (it.isDefence ? "Defence " : "Proposal ") + (days === 0 ? "today" : lowerFirst(cd.text)); }
+    if (it.done) { cls = "ms is-done"; chipCls = "done"; chipText = "Finished"; }
+    var html = '<li class="' + cls + '">';
+    html += '<div class="date" aria-hidden="true"><span class="dow">' + esc(fmtDow.format(it.date)) + '</span><span class="day">' +
+      it.date.getDate() + '</span><span class="my">' + esc(fmtMonthYear.format(it.date)) + "</span></div>";
+    html += '<div class="card body"><h3>' + esc(it.title) +
+      (it.tag ? '<span class="tag">' + esc(it.tag) + "</span>" : "") +
+      (nextItem === it && !it.isKey ? '<span class="next-tag">Next up</span>' : "") + "</h3>";
+    html += '<p class="long">' + esc(fmtLong.format(it.date)) + "</p>";
+    html += '<p class="rule">' + esc(it.rule) + "</p>";
+    if (it.extra) html += '<p class="extra' + (it.extraBad ? " bad" : "") + '">' + esc(it.extra) + "</p>";
+    if (!it.isKey && !it.done && it.raw && daysBetween(it.raw, it.date) !== 0) {
+      html += '<p class="moved">Moved from ' + esc(DAY_NAMES[it.raw.getDay()]) + " " + esc(fmtShort.format(it.raw)) + " because it falls on a weekend.</p>";
+    }
+    html += linksHTML(it.links);
+    html += '<span class="chip ' + chipCls + '">' + esc(chipText) + "</span>";
+    html += "</div></li>";
+    return html;
+  }
+
+  /* ---------- Roadmap chart ---------- */
+  function roadmapChartHTML(r, now, generic) {
+    var maxDate = [r.defence, r.programEnd, r.proposal].reduce(function (a, b) { return a > b ? a : b; });
+    var axis = r.terms.filter(function (t) { return t.start <= maxDate; });
+    var a0 = axis[0].start, a1 = addDays(axis[axis.length - 1].end, 1);
+    var total = daysBetween(a0, a1);
+    function pos(d) { return Math.max(0, Math.min(100, daysBetween(a0, d) / total * 100)); }
+    function bar(from, to, cls, title) {
+      var l = pos(from), w = Math.max(pos(to) - l, 0.6);
+      return '<span class="rm-bar ' + cls + '" style="left:' + l.toFixed(2) + "%;width:" + w.toFixed(2) + '%" title="' + esc(title) + '"></span>';
+    }
+    function diamond(d, cls, title) {
+      return '<span class="rm-diamond ' + cls + '" style="left:' + pos(d).toFixed(2) + '%" title="' + esc(title) + '"></span>';
+    }
+    function range(a, b) { return generic ? span(daysBetween(a, b)) : fmtShortYear.format(a) + " to " + fmtShortYear.format(b) + " (" + span(daysBetween(a, b)) + ")"; }
+    function row(label, inner) {
+      return '<div class="rm-row"><div class="rm-label">' + esc(label) + '</div><div class="rm-track">' + inner + "</div></div>";
+    }
+
+    var html = '<div class="rm-scroll"><div class="rm" style="--n:' + axis.length + '">';
+
+    // Background bands and today line
+    html += '<div class="rm-bands">';
+    axis.forEach(function (t) {
+      html += '<span class="rm-band' + (t.progYear % 2 === 0 ? " alt" : "") + '" style="left:' + pos(t.start).toFixed(2) + "%;width:" + (pos(addDays(t.end, 1)) - pos(t.start)).toFixed(2) + '%"></span>';
+    });
+    if (!generic && now >= a0 && now < a1) html += '<span class="rm-now" style="left:' + pos(now).toFixed(2) + '%"><span>Today</span></span>';
+    html += "</div>";
+
+    // Header
+    html += '<div class="rm-row rm-head"><div class="rm-label"></div><div class="rm-track">';
+    axis.forEach(function (t) {
+      if ((t.n - 1) % 3 === 0) html += '<span class="rm-year" style="left:' + pos(t.start).toFixed(2) + '%">Year ' + t.progYear + "</span>";
+      html += '<span class="rm-term" style="left:' + pos(t.start).toFixed(2) + "%;width:" + (pos(addDays(t.end, 1)) - pos(t.start)).toFixed(2) + '%">' + esc(t.name) + (generic ? "" : "<br>" + t.year) + "</span>";
+    });
+    html += "</div></div>";
+
+    // Program
+    html += '<div class="rm-group">Program</div>';
+    r.program.forEach(function (it) {
+      html += row(it.bar, bar(it.from, it.date, "early", it.bar + ": " + range(it.from, it.date)));
+    });
+
+    // Proposal
+    html += '<div class="rm-group">Proposal</div>';
+    var pre = r.pre.filter(function (it) { return it.bar; });
+    pre.forEach(function (it, i) {
+      var to = i + 1 < r.pre.length ? r.pre[i + 1].date : r.proposal;
+      html += row(it.bar, bar(it.date, to, it.barCls, it.bar + ": " + range(it.date, to)));
+    });
+    html += row("Proposal meeting",
+      '<span class="rm-window" style="left:' + pos(r.windowFrom).toFixed(2) + "%;width:" + (pos(addDays(r.windowTo, 1)) - pos(r.windowFrom)).toFixed(2) + '%" title="Lab window: ' + esc(r.windowText) + '"></span>' +
+      diamond(r.proposal, "", "Proposal meeting" + (generic ? "" : ": " + fmtLong.format(r.proposal))));
+
+    // Thesis
+    html += '<div class="rm-group">Thesis</div>';
+    var th = r.thesis;
+    var thesisRows = [
+      { label: "Thesis data collection", from: r.proposal, to: th[0].date, cls: "collect" }
+    ];
+    for (var k = 0; k < th.length - 1; k++) {
+      thesisRows.push({ label: th[k].next, from: th[k].date, to: th[k + 1].date, cls: th[k].nextCls });
+    }
+    thesisRows.forEach(function (s) {
+      html += row(s.label, s.to > s.from ? bar(s.from, s.to, s.cls, s.label + ": " + range(s.from, s.to)) : "");
+    });
+    html += row("Defence", diamond(r.defence, "defence", "Defence" + (generic ? "" : ": " + fmtLong.format(r.defence))));
+
+    html += "</div></div>";
+    return html;
+  }
+
+  /* ---------- Before-proposal view ---------- */
+  function renderPre(key) {
     var prog = PROGRAMS[key];
-    var iso = defenceInput.value;
-    var defence = parseISO(iso);
-    updateURL(key, defence ? iso : "");
-    renderRules(key);
+    var rm = ROADMAPS[key];
+    var start = readStart();
+    var generic = !start;
+    var now = today();
+    var proposalIn = parseISO(proposalInput.value);
+    var defenceIn = parseISO(defenceInput.value);
+    var s = start || { year: now.getFullYear(), term: "fall" };
+    var r = computeRoadmap(key, s.year, s.term, generic ? null : proposalIn, generic ? null : defenceIn);
+
+    proposalHint.textContent = generic
+      ? "Leave blank to use " + fmtMonthDay.format(r.proposalDefault) + " in " + rm.proposalText + "."
+      : "Leave blank to use " + fmtLong.format(r.proposalDefault) + ", in " + rm.proposalText + ".";
+    defenceHint.textContent = generic
+      ? "Leave blank to use the end of the standard program length, " + rm.lengthText + "."
+      : "Leave blank to use the end of the standard program length: " + fmtLong.format(r.defenceDefault) + ".";
+
+    var html = "";
+    if (generic) {
+      lastItems = null;
+      html += '<div class="summary"><div><h2>The ' + esc(prog.label) + " roadmap</h2>" +
+        "<p>Choose your program start term and year above to put dates on this roadmap and get a dated list of deadlines.</p></div></div>";
+      html += '<div class="card roadmap"><p class="eyebrow-sm">' + esc(prog.label) + " roadmap, " + esc(rm.lengthText) + "</p>" +
+        roadmapChartHTML(r, now, true) +
+        '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Diamonds mark the proposal meeting and the defence.</p></div>';
+      results.innerHTML = html;
+      return;
+    }
+
+    var all = r.program.concat(r.pre, r.thesis).sort(function (a, b) { return a.date - b.date; });
+    lastItems = { key: key, items: all, defence: r.defence };
+    var nextItem = null;
+    for (var i = 0; i < all.length; i++) {
+      if (daysBetween(now, all[i].date) >= 0) { nextItem = all[i]; break; }
+    }
+
+    html += '<p class="print-only">Generated ' + esc(fmtLong.format(now)) + ".</p>";
+    html += '<div class="summary"><div>';
+    html += "<h2>Your " + esc(prog.label) + " roadmap</h2>";
+    html += "<p>Started <strong>" + esc(r.terms[0].label) + "</strong>. Proposal on <strong>" + esc(fmtLong.format(r.proposal)) + "</strong>" +
+      (r.usingProposalDefault ? " (default)" : "") + ". Defence on <strong>" + esc(fmtLong.format(r.defence)) + "</strong>" +
+      (r.usingDefenceDefault ? " (default)" : "") + ".";
+    if (nextItem && !nextItem.isKey) {
+      html += " Next deadline: <strong>" + esc(lowerFirst(nextItem.title)) + "</strong>, " + esc(lowerFirst(countdown(daysBetween(now, nextItem.date)).text)) + ".";
+    }
+    html += "</p></div>" + actionsHTML() + "</div>";
+
+    // Alerts
+    var pilotStart = r.pre[0];
+    if (daysBetween(now, r.proposal) < 0) {
+      html += '<div class="alert warn"><p><strong>Your proposal date has passed.</strong> Choose "After my proposal" above to see your thesis deadlines.</p></div>';
+    } else if (daysBetween(now, pilotStart.date) < 0) {
+      var ep = earliestProposal(now);
+      html += '<div class="alert danger"><p><strong>This proposal date leaves too little time.</strong> Pilot data collection needed to start by ' + esc(fmtLong.format(pilotStart.date)) + ".</p>";
+      if (ep) {
+        html += "<p>If you start pilot data collection today, the earliest proposal meeting that fits is <strong>" + esc(fmtLong.format(ep)) + "</strong>. " +
+          '<button type="button" class="linkbtn" data-set-proposal="' + toISO(ep) + '">Use this date</button></p>';
+      }
+      html += "</div>";
+    }
+    if (r.dcDays <= 0) {
+      html += '<div class="alert danger"><p><strong>The proposal and defence dates do not fit together.</strong> For a defence on ' + esc(fmtLong.format(r.defence)) +
+        ", thesis data collection must be finished by " + esc(fmtLong.format(r.dataCollection.date)) + ". That is before your proposal. Choose a later defence date or an earlier proposal.</p></div>";
+    }
+    if (r.proposal < r.windowFrom || r.proposal > r.windowTo) {
+      html += '<div class="alert warn"><p><strong>This proposal date is outside the lab plan.</strong> Your lab plans the proposal for ' + esc(rm.proposalText) + ", " +
+        esc(fmtLong.format(r.windowFrom)) + " to " + esc(fmtLong.format(r.windowTo)) + ".</p></div>";
+    }
+    if (r.defence > r.programEnd) {
+      html += '<div class="alert warn"><p><strong>This defence is after the standard program length.</strong> ' + esc(prog.label) + " programs run " + esc(rm.lengthText) +
+        ", which ends on " + esc(fmtLong.format(r.programEnd)) + ". Talk with your supervisor about an extension.</p></div>";
+    }
+
+    html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false) +
+      '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Hover over a bar for its dates.</p></div>';
+
+    // Dated list by stage
+    var groups = [
+      { label: "Program", items: r.program.slice().sort(function (a, b) { return a.date - b.date; }) },
+      { label: "Before the proposal", items: r.pre },
+      { label: "Thesis", items: r.thesis }
+    ];
+    html += '<ol class="timeline">';
+    groups.forEach(function (g) {
+      html += '<li class="list-group" aria-hidden="true">' + esc(g.label) + "</li>";
+      g.items.forEach(function (it) { html += milestoneHTML(it, now, nextItem, g.label !== "Thesis"); });
+    });
+    html += "</ol>";
+    results.innerHTML = html;
+  }
+
+  /* ---------- After-proposal view ---------- */
+  function doneSet() {
+    return dataDoneInput.checked ? { dataCollection: true } : {};
+  }
+
+  function renderPost(key) {
+    var prog = PROGRAMS[key];
+    var defence = parseISO(defenceInput.value);
+    defenceHint.textContent = "The date you expect to defend and finish your degree. Every deadline counts back from it.";
     lastItems = null;
 
     if (!defence) {
       results.innerHTML = '<div class="empty">Enter your planned defence date to see your timeline.</div>';
       return;
     }
-
     var now = today();
     if (daysBetween(now, defence) < 0) {
       results.innerHTML = '<div class="alert danger"><p><strong>That date has passed.</strong> Enter a planned defence date in the future.</p></div>';
@@ -665,25 +1127,15 @@
       if (daysBetween(now, active[i].date) >= 0) { nextItem = active[i]; break; }
     }
 
-    var html = "";
-    var name = nameInput.value.trim();
-    html += '<p class="print-only">' + (name ? "Prepared for " + esc(name) + ". " : "") + "Generated " + esc(fmtLong.format(now)) + ".</p>";
-
-    // Summary
+    var html = '<p class="print-only">Generated ' + esc(fmtLong.format(now)) + ".</p>";
     html += '<div class="summary"><div>';
     html += "<h2>Your " + esc(prog.label) + " timeline</h2>";
     html += "<p>Defence on <strong>" + esc(fmtLong.format(defence)) + "</strong>.";
-    if (nextItem && !nextItem.isDefence) {
+    if (nextItem && !nextItem.isKey) {
       html += " Next deadline: <strong>" + esc(lowerFirst(nextItem.title)) + "</strong>, " + esc(lowerFirst(countdown(daysBetween(now, nextItem.date)).text)) + ".";
     }
-    html += "</p></div>";
-    html += '<div class="actions">' +
-      '<button type="button" class="btn primary" data-action="ics">' + ICONS.cal + "Add to calendar</button>" +
-      '<button type="button" class="btn" data-action="print">' + ICONS.print + "Print or save PDF</button>" +
-      '<button type="button" class="btn" data-action="copy">' + ICONS.link + '<span>Copy link</span></button>' +
-      "</div></div>";
+    html += "</p></div>" + actionsHTML() + "</div>";
 
-    // Feasibility warning
     if (daysBetween(now, first.date) < 0) {
       var earliest = earliestDefence(key, now, done);
       html += '<div class="alert danger"><p><strong>This defence date leaves too little time.</strong> To defend on this date, you needed to ' +
@@ -696,19 +1148,18 @@
       html += "</div>";
     }
 
-    // Phase bar
     var segs = [];
     if (now < first.date) {
-      segs.push({ cls: first.leadCls || "extra", label: first.lead || "Time remaining", from: now, to: first.date, note: first.leadNote });
+      segs.push({ cls: first.leadCls || "collect", label: first.lead || "Time remaining", from: now, to: first.date, note: first.leadNote });
     }
     for (var k = 0; k < active.length - 1; k++) {
-      segs.push({ cls: active[k].nextCls || "extra", label: active[k].next || "Next stage", from: active[k].date, to: active[k + 1].date });
+      segs.push({ cls: active[k].nextCls, label: active[k].next, from: active[k].date, to: active[k + 1].date });
     }
     var start = now < first.date ? now : first.date;
     var total = Math.max(daysBetween(start, defence), 1);
     var showToday = now > start && now <= defence;
 
-    html += '<div class="card phases"><h3>How your time breaks down</h3>';
+    html += '<div class="card phases"><p class="eyebrow-sm">How your time breaks down</p>';
     html += '<div class="bar-wrap' + (showToday ? " has-today" : "") + '"><div class="bar" role="img" aria-label="Timeline from ' +
       esc(fmtShortYear.format(start)) + " to " + esc(fmtShortYear.format(defence)) + '">';
     segs.forEach(function (s) {
@@ -723,59 +1174,97 @@
     html += '</div><ul class="legend">';
     segs.forEach(function (s) {
       var d = Math.max(daysBetween(s.from, s.to), 0);
-      html += '<li><i class="swatch seg ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
+      html += '<li><i class="swatch ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
         esc(s.note || fmtShort.format(s.from) + " to " + fmtShort.format(s.to)) + "</span></div></li>";
     });
     html += "</ul></div>";
 
-    // Milestones
     html += '<ol class="timeline">';
-    items.forEach(function (it) {
-      var days = daysBetween(now, it.date);
-      var cd = countdown(days);
-      var past = days < 0;
-      var cls = "ms" + (it.isDefence ? " is-defence" : "") + (past ? " is-past" : "");
-      var chipCls = it.isDefence && !past ? "defence" : cd.cls;
-      var chipText = it.isDefence && !past ? (days === 0 ? "Defence today" : "Defence " + lowerFirst(cd.text)) : cd.text;
-      if (it.done) { cls = "ms is-done"; chipCls = "done"; chipText = "Finished"; }
-      html += '<li class="' + cls + '">';
-      html += '<div class="date" aria-hidden="true"><span class="dow">' + esc(fmtDow.format(it.date)) + '</span><span class="day">' +
-        it.date.getDate() + '</span><span class="my">' + esc(fmtMonthYear.format(it.date)) + "</span></div>";
-      html += '<div class="card body"><h3>' + esc(it.title) +
-        (nextItem === it && !it.isDefence ? '<span class="next-tag">Next up</span>' : "") + "</h3>";
-      html += '<p class="long">' + esc(fmtLong.format(it.date)) + "</p>";
-      html += '<p class="rule">' + esc(it.rule) + "</p>";
-      if (!it.isDefence && !it.done && it.raw && daysBetween(it.raw, it.date) !== 0) {
-        html += '<p class="moved">Moved from ' + esc(DAY_NAMES[it.raw.getDay()]) + " " + esc(fmtShort.format(it.raw)) + " because it falls on a weekend.</p>";
-      }
-      html += '<span class="chip ' + chipCls + '">' + esc(chipText) + "</span>";
-      html += "</div></li>";
-    });
+    items.forEach(function (it) { html += milestoneHTML(it, now, nextItem, false); });
     html += "</ol>";
-
     results.innerHTML = html;
   }
 
+  /* ---------- Rules box ---------- */
+  function renderRules(key, mode) {
+    var prog = PROGRAMS[key];
+    var rm = ROADMAPS[key];
+    var html = '<h2 id="rules-title">How the ' + esc(prog.label) + " dates are set</h2>";
+    if (mode === "pre") {
+      html += "<h3>Program</h3><ul>";
+      html += "<li><strong>Program length.</strong> " + esc(rm.lengthText) + ".</li>";
+      rm.items.forEach(function (m) {
+        html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
+      });
+      html += "<li><strong>Thesis proposal.</strong> In " + esc(rm.proposalText) + ".</li>";
+      html += "<li>SKHS asks for an annual progress report each spring.</li></ul>";
+      html += "<h3>Before the proposal</h3><ul>";
+      PROPOSAL_STEPS.forEach(function (m) {
+        html += "<li><strong>" + esc(m.bar) + ".</strong> " + esc(m.rule) + "</li>";
+      });
+      html += "</ul>";
+      html += "<h3>Thesis</h3>";
+    }
+    html += "<ul>";
+    prog.milestones.forEach(function (m) {
+      html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
+    });
+    if (MOVE_WEEKENDS_TO_FRIDAY) html += "<li>A deadline that lands on a weekend moves to the Friday before.</li>";
+    html += "<li>These are minimum lead times. Sending drafts earlier gives your supervisor and committee more room.</li></ul>";
+    var otherKey = key === "msc" ? "phd" : "msc";
+    var other = PROGRAMS[otherKey];
+    html += '<p class="compare">' + esc(other.label) + " thesis rules: " +
+      other.milestones.map(function (m) { return lowerFirst(m.title) + ", " + lowerFirst(m.rule.replace(/\.$/, "")); }).join("; ") + ".</p>";
+    rulesBox.innerHTML = html;
+  }
+
+  function render() {
+    var key = currentKey();
+    var mode = currentMode();
+    applyMode(mode);
+    updateURL();
+    renderRules(key, mode);
+    if (mode === "pre") renderPre(key);
+    else renderPost(key);
+  }
+
   /* ---------- URL state ---------- */
-  function updateURL(key, iso) {
+  function updateURL() {
     try {
       var p = new URLSearchParams();
-      p.set("degree", key);
-      if (iso) p.set("defence", iso);
-      if (dataDoneInput.checked) p.set("data", "done");
+      var mode = currentMode();
+      p.set("degree", currentKey());
+      p.set("mode", mode);
+      var st = readStart();
+      if (mode === "pre" && st) p.set("start", st.term + "-" + st.year);
+      if (mode === "pre" && parseISO(proposalInput.value)) p.set("proposal", proposalInput.value);
+      if (parseISO(defenceInput.value)) p.set("defence", defenceInput.value);
+      if (mode === "post" && dataDoneInput.checked) p.set("data", "done");
       history.replaceState(null, "", location.pathname + "?" + p.toString());
     } catch (e) { /* ignore */ }
+  }
+  function setRadio(name, value) {
+    var r = form.querySelector('input[name="' + name + '"][value="' + value + '"]');
+    if (r) r.checked = true;
   }
   function readURL() {
     try {
       var p = new URLSearchParams(location.search);
       var deg = (p.get("degree") || "").toLowerCase();
-      if (PROGRAMS[deg]) {
-        var r = form.querySelector('input[name="degree"][value="' + deg + '"]');
-        if (r) r.checked = true;
+      if (PROGRAMS[deg]) setRadio("degree", deg);
+      var mode = p.get("mode");
+      if (mode !== "pre" && mode !== "post") mode = p.get("defence") ? "post" : "pre";
+      setRadio("mode", mode);
+      var st = /^(fall|winter|summer)-(\d{4})$/.exec(p.get("start") || "");
+      if (st) {
+        startTermInput.value = st[1];
+        if (!startYearInput.querySelector('option[value="' + st[2] + '"]')) {
+          var o = document.createElement("option"); o.value = st[2]; o.textContent = st[2]; startYearInput.appendChild(o);
+        }
+        startYearInput.value = st[2];
       }
-      var d = p.get("defence");
-      if (d && parseISO(d)) defenceInput.value = d;
+      if (parseISO(p.get("proposal"))) proposalInput.value = p.get("proposal");
+      if (parseISO(p.get("defence"))) defenceInput.value = p.get("defence");
       if (p.get("data") === "done") dataDoneInput.checked = true;
     } catch (e) { /* ignore */ }
   }
@@ -791,7 +1280,7 @@
     while (rest.length) { out += "\r\n " + rest.slice(0, 73); rest = rest.slice(73); }
     return out;
   }
-  function buildICS(state, name) {
+  function buildICS(state) {
     var prog = PROGRAMS[state.key];
     var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
     var lines = [
@@ -803,18 +1292,17 @@
       "X-WR-CALNAME:" + icsEscape(prog.label + " thesis timeline")
     ];
     state.items.forEach(function (it) {
-      var desc = it.rule + (name ? " Prepared for " + name + "." : "");
       lines.push(
         "BEGIN:VEVENT",
         "UID:" + state.key + "-" + it.id + "-" + icsDate(it.date) + "@smel-thesis-timeline",
         "DTSTAMP:" + stamp,
         "DTSTART;VALUE=DATE:" + icsDate(it.date),
         "DTEND;VALUE=DATE:" + icsDate(addDays(it.date, 1)),
-        "SUMMARY:" + icsEscape(prog.label + " thesis: " + it.title),
-        "DESCRIPTION:" + icsEscape(desc),
+        "SUMMARY:" + icsEscape(prog.label + ": " + it.title),
+        "DESCRIPTION:" + icsEscape(it.rule),
         "TRANSP:TRANSPARENT"
       );
-      if (!it.isDefence) {
+      if (!it.isKey) {
         lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(it.title + " is due in one week"), "TRIGGER:-P7D", "END:VALARM");
       }
       lines.push("END:VEVENT");
@@ -824,7 +1312,7 @@
   }
   function downloadICS() {
     if (!lastItems) return;
-    var text = buildICS(lastItems, nameInput.value.trim());
+    var text = buildICS(lastItems);
     var blob = new Blob([text], { type: "text/calendar;charset=utf-8" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -862,23 +1350,27 @@
 
   /* ---------- Events ---------- */
   form.addEventListener("change", render);
-  form.addEventListener("input", function (e) { if (e.target === nameInput || e.target === defenceInput) render(); });
+  form.addEventListener("input", function (e) {
+    if (e.target === defenceInput || e.target === proposalInput) render();
+  });
   form.addEventListener("submit", function (e) { e.preventDefault(); render(); });
   results.addEventListener("click", function (e) {
     var btn = e.target.closest("button");
     if (!btn) return;
     if (btn.dataset.set) { defenceInput.value = btn.dataset.set; render(); defenceInput.focus(); return; }
+    if (btn.dataset.setProposal) { proposalInput.value = btn.dataset.setProposal; render(); proposalInput.focus(); return; }
     var action = btn.dataset.action;
     if (action === "ics") downloadICS();
     else if (action === "print") window.print();
     else if (action === "copy") copyLink(btn);
   });
 
+  fillYears();
   readURL();
   render();
 
   /* Exposed for testing. */
-  window.ThesisPlanner = { compute: compute, earliestDefence: earliestDefence, parseISO: parseISO, toISO: toISO, buildICS: buildICS, PROGRAMS: PROGRAMS };
+  window.ThesisPlanner = { compute: compute, computeProposal: computeProposal, computeRoadmap: computeRoadmap, earliestDefence: earliestDefence, earliestProposal: earliestProposal, parseISO: parseISO, toISO: toISO, buildICS: buildICS };
 })();
 </script>
 </body>
