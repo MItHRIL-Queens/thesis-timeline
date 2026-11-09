@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thesis Timeline Planner</title>
+<meta name="description" content="Enter your degree and planned defence date to get the M.Sc. or Ph.D. thesis deadlines you need to meet. Sensorimotor Exploration Laboratory, Queen's University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --surface: #ffffff;
+    --surface-2: #faf9f6;
+    --ink: #1b2130;
+    --muted: #5d6676;
+    --line: #e2ddd2;
+    --accent: #23407a;
+    --accent-ink: #ffffff;
+    --gold: #a8741a;
+    --danger: #b3261e;
+    --danger-bg: #fdecea;
+    --warn: #8a5200;
+    --warn-bg: #fff3dc;
+    --phase-write: #d9a441;
+    --phase-review: #23407a;
+    --phase-read: #2b7c78;
+    --phase-extra: #7a4d8c;
+    --ok: #2e7d4f;
+    --ok-bg: #e4f3e9;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(20, 24, 33, .05), 0 8px 24px rgba(20, 24, 33, .06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11141a;
+      --surface: #1a1f28;
+      --surface-2: #151a22;
+      --ink: #e9ebf0;
+      --muted: #9ba4b3;
+      --line: #2b323e;
+      --accent: #8eaee6;
+      --accent-ink: #0f1420;
+      --gold: #e0b45a;
+      --danger: #f2877c;
+      --danger-bg: #3a1d1b;
+      --warn: #f0c27a;
+      --warn-bg: #3a2c14;
+      --phase-write: #d9a441;
+      --phase-review: #6f93d6;
+      --phase-read: #4bb3ad;
+      --phase-extra: #b488c6;
+      --ok: #7fd19b;
+      --ok-bg: #1c3324;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #11141a;
+    --surface: #1a1f28;
+    --surface-2: #151a22;
+    --ink: #e9ebf0;
+    --muted: #9ba4b3;
+    --line: #2b323e;
+    --accent: #8eaee6;
+    --accent-ink: #0f1420;
+    --gold: #e0b45a;
+    --danger: #f2877c;
+    --danger-bg: #3a1d1b;
+    --warn: #f0c27a;
+    --warn-bg: #3a2c14;
+    --phase-write: #d9a441;
+    --phase-review: #6f93d6;
+    --phase-read: #4bb3ad;
+    --phase-extra: #b488c6;
+    --ok: #7fd19b;
+    --ok-bg: #1c3324;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .serif { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; }
+
+  header.site { padding: 48px 0 24px; }
+  .eyebrow {
+    margin: 0;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  h1 {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    line-height: 1.1;
+    margin: .35rem 0 .6rem;
+    letter-spacing: -.01em;
+  }
+  .lede { margin: 0; color: var(--muted); max-width: 60ch; font-size: 1.05rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* Form */
+  .form { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+  .degree { grid-column: 1 / -1; border: 0; margin: 0; padding: 0; min-width: 0; }
+  .degree-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  legend, .field > label { display: block; font-weight: 600; font-size: .9rem; margin: 0 0 8px; padding: 0; }
+  .choice { position: relative; display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .choice span {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  .choice strong { font-size: 1.15rem; }
+  .choice small { color: var(--muted); font-size: .85rem; }
+  .choice:hover span { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+  .choice input:checked + span {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  .choice input:focus-visible + span { outline: 3px solid color-mix(in srgb, var(--accent) 40%, transparent); outline-offset: 2px; }
+  .field { min-width: 0; }
+  .field input {
+    width: 100%;
+    font: inherit;
+    padding: 11px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--ink);
+    min-height: 46px;
+  }
+  .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .hint { margin: 6px 0 0; color: var(--muted); font-size: .85rem; }
+  .opt { font-weight: 400; color: var(--muted); }
+  .check-field { grid-column: 1 / -1; margin-top: -4px; }
+  .field > label.check { display: inline-flex; align-items: center; gap: 10px; margin: 0; font-weight: 500; font-size: .95rem; cursor: pointer; }
+  .field .check input { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 0; accent-color: var(--accent); flex: none; }
+
+  /* Results */
+  #results { margin: 28px 0 0; }
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 44px 16px;
+    border: 1.5px dashed var(--line);
+    border-radius: var(--radius);
+  }
+  .summary { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .summary h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 1.6rem; line-height: 1.2; margin: 0; }
+  .summary p { margin: 4px 0 0; color: var(--muted); }
+  .summary p strong { color: var(--ink); font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn {
+    font: inherit; font-size: .9rem; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 14px; min-height: 40px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .btn:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+  .linkbtn { font: inherit; font-weight: 600; color: var(--accent); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+
+  .alert { padding: 14px 16px; border-radius: 12px; margin: 0 0 18px; border: 1px solid; }
+  .alert.danger { background: var(--danger-bg); border-color: color-mix(in srgb, var(--danger) 35%, transparent); }
+  .alert.danger strong { color: var(--danger); }
+  .alert p { margin: 0; }
+  .alert p + p { margin-top: 6px; }
+
+  .phases { padding: 20px 22px; margin-bottom: 22px; }
+  .phases h3, .rules h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; font-weight: 600; }
+  .bar-wrap { position: relative; padding: 4px 0; }
+  .bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--line); gap: 2px; }
+  .seg { height: 100%; min-width: 4px; }
+  .seg.write { background: var(--phase-write); }
+  .seg.review { background: var(--phase-review); }
+  .seg.read { background: var(--phase-read); }
+  .seg.extra, .seg.collect { background: var(--phase-extra); }
+  .today {
+    position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1.5px;
+    background: var(--ink); border-radius: 2px;
+  }
+  .today span {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+  }
+  .bar-wrap.has-today { margin-top: 30px; }
+  .legend { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 20px; }
+  .legend li { display: flex; gap: 10px; align-items: flex-start; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; margin-top: 5px; flex: none; }
+  .legend b { display: block; font-size: .95rem; font-weight: 600; }
+  .legend span { color: var(--muted); font-size: .85rem; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 43px; top: 20px; bottom: 20px; width: 2px; background: var(--line); }
+  .ms { display: grid; grid-template-columns: 88px 1fr; gap: 16px; align-items: start; padding: 0 0 16px; position: relative; }
+  .ms:last-child { padding-bottom: 0; }
+  .date {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 8px 4px 9px;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+  }
+  .date .dow { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .date .day { display: block; font-family: "Source Serif 4", Georgia, serif; font-size: 1.9rem; font-weight: 700; line-height: 1.05; }
+  .date .my { display: block; font-size: .75rem; color: var(--muted); }
+  .ms.is-defence .date { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--surface)); }
+  .ms.is-past .date { opacity: .7; }
+  .ms .body { padding: 14px 18px 16px; }
+  .ms h3 { margin: 0; font-size: 1.06rem; line-height: 1.3; }
+  .ms .long { margin: 2px 0 8px; color: var(--muted); font-size: .9rem; }
+  .ms .rule { margin: 0; font-size: .92rem; }
+  .ms .moved { margin: 6px 0 0; font-size: .82rem; color: var(--muted); }
+  .chip {
+    display: inline-block; margin-top: 10px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: .78rem; font-weight: 600;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+  }
+  .chip.soon { background: var(--warn-bg); color: var(--warn); }
+  .chip.past { background: var(--danger-bg); color: var(--danger); }
+  .chip.defence { background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold); }
+  .chip.done { background: var(--ok-bg); color: var(--ok); }
+  .ms.is-done .date { opacity: .7; }
+  .next-tag { display: inline-block; margin-left: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); vertical-align: 2px; }
+
+  .rules { padding: 22px; margin: 28px 0 0; }
+  .rules ul { margin: 0; padding-left: 20px; }
+  .rules li + li { margin-top: 6px; }
+  .rules .compare { margin-top: 16px; color: var(--muted); font-size: .9rem; }
+
+  footer.site { padding: 36px 0 48px; color: var(--muted); font-size: .85rem; }
+  footer.site p { margin: 0; }
+
+  .print-only { display: none; }
+
+  @media (max-width: 640px) {
+    header.site { padding: 32px 0 20px; }
+    .form { grid-template-columns: 1fr; padding: 20px; }
+    .summary { flex-direction: column; align-items: stretch; }
+    .actions .btn { flex: 1 1 auto; justify-content: center; }
+    .ms { grid-template-columns: 70px 1fr; gap: 12px; }
+    .timeline::before { left: 34px; }
+    .date .day { font-size: 1.6rem; }
+    .ms .body { padding: 12px 14px 14px; }
+    .phases { padding: 18px 16px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; font-size: 12pt; }
+    header.site { padding: 0 0 12px; }
+    .lede, #planner, .actions, .alert .linkbtn, footer.site { display: none !important; }
+    .card { box-shadow: none; border-color: #ccc; }
+    .print-only { display: block; margin: 0 0 12px; color: #444; }
+    .ms, .phases, .rules { break-inside: avoid; }
+    #results { margin-top: 8px; }
+  }
+</style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <p class="eyebrow">Sensorimotor Exploration Laboratory &middot; Queen's University</p>
+      <h1>Thesis Timeline Planner</h1>
+      <p class="lede">Choose your degree and enter the date you plan to defend. The planner counts back from that date and gives you the deadline for each milestone.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form id="planner" class="card form" novalidate autocomplete="off">
+      <fieldset class="degree">
+        <legend>Degree</legend>
+        <div class="degree-options">
+          <label class="choice">
+            <input type="radio" name="degree" value="msc" checked>
+            <span><strong>M.Sc.</strong><small>Master's thesis</small></span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="degree" value="phd">
+            <span><strong>Ph.D.</strong><small>Doctoral thesis</small></span>
+          </label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="defence">Planned defence date</label>
+        <input type="date" id="defence" name="defence" min="2000-01-01" max="2100-12-31">
+        <p class="hint">The date you expect to defend and finish your degree. Every deadline counts back from it.</p>
+      </div>
+      <div class="field">
+        <label for="name">Your name <span class="opt">(optional)</span></label>
+        <input type="text" id="name" name="name" placeholder="Shown on the printout and calendar">
+        <p class="hint">Stays in your browser. It is not saved or sent anywhere.</p>
+      </div>
+      <div class="field check-field">
+        <label class="check"><input type="checkbox" id="dataDone" name="dataDone" value="dataCollection"><span>My data collection is already finished</span></label>
+      </div>
+    </form>
+
+    <section id="results" aria-live="polite"></section>
+
+    <section class="card rules" id="rules" aria-labelledby="rules-title"></section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <p>Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University. Talk with your supervisor before you lock in a defence date.</p>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Planner rules. Edit this block to change the timeline.
+     Each milestone is set a fixed time before a later milestone.
+     "before" names the later milestone ("defence" is the date the
+     student enters). Offsets can use months, weeks or days.
+     "action" completes the sentence "If you ... today".
+     "lead" labels the time from today until the milestone.
+     "next" labels the window that follows the milestone.
+     The *Cls fields pick the bar colour: collect, write, review, read.
+     ------------------------------------------------------------------ */
+  var DATA_COLLECTION = {
+    id: "dataCollection",
+    title: "Data collection complete",
+    before: "firstDraft",
+    offset: { months: 2 },
+    rule: "At least 2 months before the first full draft goes to your supervisor.",
+    action: "finish data collection",
+    lead: "Data collection", leadCls: "collect", leadNote: "Today until data collection must be complete",
+    next: "Analysis and writing", nextCls: "write"
+  };
+
+  var PROGRAMS = {
+    msc: {
+      label: "M.Sc.",
+      milestones: [
+        DATA_COLLECTION,
+        {
+          id: "firstDraft",
+          title: "First full draft to supervisor",
+          before: "committee",
+          offset: { months: 2 },
+          rule: "At least 2 months before the thesis goes to the committee.",
+          action: "send your first full draft to your supervisor",
+          lead: "Writing time", leadCls: "write", leadNote: "Today until the first full draft is due",
+          next: "Supervisor review and revisions", nextCls: "review"
+        },
+        {
+          id: "committee",
+          title: "Final draft to committee",
+          before: "defence",
+          offset: { months: 1 },
+          rule: "At least 1 month before the defence.",
+          action: "send your final draft to the committee",
+          lead: "Final revisions", leadCls: "review", leadNote: "Today until the thesis goes to the committee",
+          next: "Committee reading period", nextCls: "read"
+        }
+      ]
+    },
+    phd: {
+      label: "Ph.D.",
+      milestones: [
+        DATA_COLLECTION,
+        {
+          id: "firstDraft",
+          title: "First full draft to supervisor",
+          before: "committee",
+          offset: { months: 3 },
+          rule: "At least 3 months before the thesis goes to the committee.",
+          action: "send your first full draft to your supervisor",
+          lead: "Writing time", leadCls: "write", leadNote: "Today until the first full draft is due",
+          next: "Supervisor review and revisions", nextCls: "review"
+        },
+        {
+          id: "committee",
+          title: "Thesis to examining committee",
+          before: "defence",
+          offset: { weeks: 8 },
+          rule: "At least 8 weeks before the defence.",
+          action: "send your thesis to the examining committee",
+          lead: "Final revisions", leadCls: "review", leadNote: "Today until the thesis goes to the committee",
+          next: "Committee reading period", nextCls: "read"
+        }
+      ]
+    }
+  };
+
+  var DEFENCE = {
+    id: "defence", title: "Thesis defence", rule: "Your planned defence date.",
+    lead: "Time until your defence", leadCls: "read", leadNote: "Today until the defence"
+  };
+
+  /* Deadlines that land on a Saturday or Sunday move to the Friday before. */
+  var MOVE_WEEKENDS_TO_FRIDAY = true;
+
+  /* ------------------------------------------------------------------ */
+
+  var DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  var fmtLong = new Intl.DateTimeFormat("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  var fmtShort = new Intl.DateTimeFormat("en-CA", { month: "short", day: "numeric" });
+  var fmtShortYear = new Intl.DateTimeFormat("en-CA", { month: "short", day: "numeric", year: "numeric" });
+  var fmtDow = new Intl.DateTimeFormat("en-CA", { weekday: "short" });
+  var fmtMonthYear = new Intl.DateTimeFormat("en-CA", { month: "short", year: "numeric" });
+
+  var form = document.getElementById("planner");
+  var defenceInput = document.getElementById("defence");
+  var nameInput = document.getElementById("name");
+  var dataDoneInput = document.getElementById("dataDone");
+  var results = document.getElementById("results");
+  var rulesBox = document.getElementById("rules");
+  var lastItems = null;
+
+  /* ---------- Date helpers (local calendar dates, no time of day) ---------- */
+  function parseISO(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || "");
+    if (!m) return null;
+    var y = +m[1], mo = +m[2] - 1, d = +m[3];
+    if (y < 2000 || y > 2100) return null;
+    var date = new Date(y, mo, d);
+    return date.getMonth() === mo && date.getDate() === d ? date : null;
+  }
+  function toISO(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function today() {
+    var n = new Date();
+    return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+  }
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+  function addMonths(d, n) {
+    var t = new Date(d.getFullYear(), d.getMonth() + n, 1);
+    var last = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate();
+    t.setDate(Math.min(d.getDate(), last));
+    return t;
+  }
+  function subtractOffset(d, off) {
+    var r = d;
+    if (off.months) r = addMonths(r, -off.months);
+    if (off.weeks) r = addDays(r, -7 * off.weeks);
+    if (off.days) r = addDays(r, -off.days);
+    return r;
+  }
+  function toFridayIfWeekend(d) {
+    var w = d.getDay();
+    if (w === 6) return addDays(d, -1);
+    if (w === 0) return addDays(d, -2);
+    return d;
+  }
+  function daysBetween(a, b) {
+    var ua = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    var ub = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    return Math.round((ub - ua) / 86400000);
+  }
+  function isWeekday(d) { var w = d.getDay(); return w !== 0 && w !== 6; }
+
+  /* ---------- Timeline calculation ---------- */
+  function compute(key, defence) {
+    var prog = PROGRAMS[key];
+    var dates = { defence: { date: defence, raw: defence } };
+    var pending = prog.milestones.slice();
+    var guard = 0;
+    while (pending.length && guard++ < 50) {
+      pending = pending.filter(function (m) {
+        var anchor = dates[m.before];
+        if (!anchor) return true;
+        var raw = subtractOffset(anchor.date, m.offset);
+        var date = MOVE_WEEKENDS_TO_FRIDAY ? toFridayIfWeekend(raw) : raw;
+        dates[m.id] = { date: date, raw: raw };
+        return false;
+      });
+    }
+    var items = prog.milestones.map(function (m) {
+      return Object.assign({}, m, dates[m.id]);
+    });
+    items.push(Object.assign({}, DEFENCE, { date: defence, raw: defence, isDefence: true }));
+    items.sort(function (a, b) { return a.date - b.date; });
+    return items;
+  }
+
+  function firstActive(items, done) {
+    for (var i = 0; i < items.length; i++) if (!done[items[i].id]) return items[i];
+    return items[items.length - 1];
+  }
+
+  /* Earliest weekday defence whose first open deadline is today or later. */
+  function earliestDefence(key, from, done) {
+    done = done || {};
+    var c = addDays(from, 1);
+    for (var i = 0; i < 1500; i++) {
+      if (isWeekday(c) && firstActive(compute(key, c), done).date >= from) return c;
+      c = addDays(c, 1);
+    }
+    return null;
+  }
+
+  function doneSet() {
+    return dataDoneInput.checked ? { dataCollection: true } : {};
+  }
+
+  /* ---------- Text helpers ---------- */
+  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+  function countdown(days) {
+    if (days < 0) {
+      var a = -days;
+      if (a === 1) return { cls: "past", text: "Passed yesterday" };
+      if (a < 14) return { cls: "past", text: "Passed " + a + " days ago" };
+      return { cls: "past", text: "Passed " + plural(Math.floor(a / 7), "week") + " ago" };
+    }
+    if (days === 0) return { cls: "soon", text: "Due today" };
+    if (days === 1) return { cls: "soon", text: "Due tomorrow" };
+    if (days < 14) return { cls: "soon", text: "In " + days + " days" };
+    var w = Math.floor(days / 7), r = days % 7;
+    return { cls: "", text: "In " + plural(w, "week") + (r ? ", " + plural(r, "day") : "") };
+  }
+  function span(days) {
+    if (days < 14) return plural(days, "day");
+    var w = Math.round(days / 7);
+    return plural(w, "week");
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function lowerFirst(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+
+  /* ---------- Rendering ---------- */
+  function currentKey() {
+    var checked = form.querySelector('input[name="degree"]:checked');
+    return checked && PROGRAMS[checked.value] ? checked.value : "msc";
+  }
+
+  function renderRules(key) {
+    var prog = PROGRAMS[key];
+    var html = '<h2 id="rules-title">How the ' + esc(prog.label) + ' dates are set</h2><ul>';
+    prog.milestones.forEach(function (m) {
+      html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
+    });
+    if (MOVE_WEEKENDS_TO_FRIDAY) html += "<li>A deadline that lands on a weekend moves to the Friday before.</li>";
+    html += "<li>These are minimum lead times. Sending drafts earlier gives your supervisor and committee more room.</li></ul>";
+    var otherKey = key === "msc" ? "phd" : "msc";
+    var other = PROGRAMS[otherKey];
+    html += '<p class="compare">' + esc(other.label) + " rules: " +
+      other.milestones.map(function (m) { return lowerFirst(m.title) + ", " + lowerFirst(m.rule.replace(/\.$/, "")); }).join("; ") + ".</p>";
+    rulesBox.innerHTML = html;
+  }
+
+  var ICONS = {
+    cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+    print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
+    link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+  };
+
+  function render() {
+    var key = currentKey();
+    var prog = PROGRAMS[key];
+    var iso = defenceInput.value;
+    var defence = parseISO(iso);
+    updateURL(key, defence ? iso : "");
+    renderRules(key);
+    lastItems = null;
+
+    if (!defence) {
+      results.innerHTML = '<div class="empty">Enter your planned defence date to see your timeline.</div>';
+      return;
+    }
+
+    var now = today();
+    if (daysBetween(now, defence) < 0) {
+      results.innerHTML = '<div class="alert danger"><p><strong>That date has passed.</strong> Enter a planned defence date in the future.</p></div>';
+      return;
+    }
+
+    var done = doneSet();
+    var items = compute(key, defence);
+    items.forEach(function (it) { it.done = !!done[it.id]; });
+    var active = items.filter(function (it) { return !it.done; });
+    lastItems = { key: key, items: active, defence: defence };
+    var first = active[0];
+    var nextItem = null;
+    for (var i = 0; i < active.length; i++) {
+      if (daysBetween(now, active[i].date) >= 0) { nextItem = active[i]; break; }
+    }
+
+    var html = "";
+    var name = nameInput.value.trim();
+    html += '<p class="print-only">' + (name ? "Prepared for " + esc(name) + ". " : "") + "Generated " + esc(fmtLong.format(now)) + ".</p>";
+
+    // Summary
+    html += '<div class="summary"><div>';
+    html += "<h2>Your " + esc(prog.label) + " timeline</h2>";
+    html += "<p>Defence on <strong>" + esc(fmtLong.format(defence)) + "</strong>.";
+    if (nextItem && !nextItem.isDefence) {
+      html += " Next deadline: <strong>" + esc(lowerFirst(nextItem.title)) + "</strong>, " + esc(lowerFirst(countdown(daysBetween(now, nextItem.date)).text)) + ".";
+    }
+    html += "</p></div>";
+    html += '<div class="actions">' +
+      '<button type="button" class="btn primary" data-action="ics">' + ICONS.cal + "Add to calendar</button>" +
+      '<button type="button" class="btn" data-action="print">' + ICONS.print + "Print or save PDF</button>" +
+      '<button type="button" class="btn" data-action="copy">' + ICONS.link + '<span>Copy link</span></button>' +
+      "</div></div>";
+
+    // Feasibility warning
+    if (daysBetween(now, first.date) < 0) {
+      var earliest = earliestDefence(key, now, done);
+      html += '<div class="alert danger"><p><strong>This defence date leaves too little time.</strong> To defend on this date, you needed to ' +
+        esc(first.action) + " by " + esc(fmtLong.format(first.date)) + ".</p>";
+      if (earliest) {
+        html += "<p>If you " + esc(first.action) + " today, the earliest defence that meets the " + esc(prog.label) +
+          " rules is <strong>" + esc(fmtLong.format(earliest)) + "</strong>. " +
+          '<button type="button" class="linkbtn" data-set="' + toISO(earliest) + '">Use this date</button></p>';
+      }
+      html += "</div>";
+    }
+
+    // Phase bar
+    var segs = [];
+    if (now < first.date) {
+      segs.push({ cls: first.leadCls || "extra", label: first.lead || "Time remaining", from: now, to: first.date, note: first.leadNote });
+    }
+    for (var k = 0; k < active.length - 1; k++) {
+      segs.push({ cls: active[k].nextCls || "extra", label: active[k].next || "Next stage", from: active[k].date, to: active[k + 1].date });
+    }
+    var start = now < first.date ? now : first.date;
+    var total = Math.max(daysBetween(start, defence), 1);
+    var showToday = now > start && now <= defence;
+
+    html += '<div class="card phases"><h3>How your time breaks down</h3>';
+    html += '<div class="bar-wrap' + (showToday ? " has-today" : "") + '"><div class="bar" role="img" aria-label="Timeline from ' +
+      esc(fmtShortYear.format(start)) + " to " + esc(fmtShortYear.format(defence)) + '">';
+    segs.forEach(function (s) {
+      var d = Math.max(daysBetween(s.from, s.to), 0);
+      html += '<div class="seg ' + s.cls + '" style="flex:' + Math.max(d, 1) + ' 1 0" title="' + esc(s.label) + ": " + esc(span(d)) + '"></div>';
+    });
+    html += "</div>";
+    if (showToday) {
+      var pct = (daysBetween(start, now) / total) * 100;
+      html += '<div class="today" style="left:' + pct.toFixed(2) + '%"><span>Today</span></div>';
+    }
+    html += '</div><ul class="legend">';
+    segs.forEach(function (s) {
+      var d = Math.max(daysBetween(s.from, s.to), 0);
+      html += '<li><i class="swatch seg ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
+        esc(s.note || fmtShort.format(s.from) + " to " + fmtShort.format(s.to)) + "</span></div></li>";
+    });
+    html += "</ul></div>";
+
+    // Milestones
+    html += '<ol class="timeline">';
+    items.forEach(function (it) {
+      var days = daysBetween(now, it.date);
+      var cd = countdown(days);
+      var past = days < 0;
+      var cls = "ms" + (it.isDefence ? " is-defence" : "") + (past ? " is-past" : "");
+      var chipCls = it.isDefence && !past ? "defence" : cd.cls;
+      var chipText = it.isDefence && !past ? (days === 0 ? "Defence today" : "Defence " + lowerFirst(cd.text)) : cd.text;
+      if (it.done) { cls = "ms is-done"; chipCls = "done"; chipText = "Finished"; }
+      html += '<li class="' + cls + '">';
+      html += '<div class="date" aria-hidden="true"><span class="dow">' + esc(fmtDow.format(it.date)) + '</span><span class="day">' +
+        it.date.getDate() + '</span><span class="my">' + esc(fmtMonthYear.format(it.date)) + "</span></div>";
+      html += '<div class="card body"><h3>' + esc(it.title) +
+        (nextItem === it && !it.isDefence ? '<span class="next-tag">Next up</span>' : "") + "</h3>";
+      html += '<p class="long">' + esc(fmtLong.format(it.date)) + "</p>";
+      html += '<p class="rule">' + esc(it.rule) + "</p>";
+      if (!it.isDefence && !it.done && it.raw && daysBetween(it.raw, it.date) !== 0) {
+        html += '<p class="moved">Moved from ' + esc(DAY_NAMES[it.raw.getDay()]) + " " + esc(fmtShort.format(it.raw)) + " because it falls on a weekend.</p>";
+      }
+      html += '<span class="chip ' + chipCls + '">' + esc(chipText) + "</span>";
+      html += "</div></li>";
+    });
+    html += "</ol>";
+
+    results.innerHTML = html;
+  }
+
+  /* ---------- URL state ---------- */
+  function updateURL(key, iso) {
+    try {
+      var p = new URLSearchParams();
+      p.set("degree", key);
+      if (iso) p.set("defence", iso);
+      if (dataDoneInput.checked) p.set("data", "done");
+      history.replaceState(null, "", location.pathname + "?" + p.toString());
+    } catch (e) { /* ignore */ }
+  }
+  function readURL() {
+    try {
+      var p = new URLSearchParams(location.search);
+      var deg = (p.get("degree") || "").toLowerCase();
+      if (PROGRAMS[deg]) {
+        var r = form.querySelector('input[name="degree"][value="' + deg + '"]');
+        if (r) r.checked = true;
+      }
+      var d = p.get("defence");
+      if (d && parseISO(d)) defenceInput.value = d;
+      if (p.get("data") === "done") dataDoneInput.checked = true;
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ---------- Calendar export ---------- */
+  function icsEscape(s) {
+    return String(s).replace(/\\/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
+  }
+  function icsDate(d) { return toISO(d).replace(/-/g, ""); }
+  function fold(line) {
+    if (line.length <= 74) return line;
+    var out = line.slice(0, 74), rest = line.slice(74);
+    while (rest.length) { out += "\r\n " + rest.slice(0, 73); rest = rest.slice(73); }
+    return out;
+  }
+  function buildICS(state, name) {
+    var prog = PROGRAMS[state.key];
+    var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    var lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Sensorimotor Exploration Laboratory//Thesis Timeline Planner//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "X-WR-CALNAME:" + icsEscape(prog.label + " thesis timeline")
+    ];
+    state.items.forEach(function (it) {
+      var desc = it.rule + (name ? " Prepared for " + name + "." : "");
+      lines.push(
+        "BEGIN:VEVENT",
+        "UID:" + state.key + "-" + it.id + "-" + icsDate(it.date) + "@smel-thesis-timeline",
+        "DTSTAMP:" + stamp,
+        "DTSTART;VALUE=DATE:" + icsDate(it.date),
+        "DTEND;VALUE=DATE:" + icsDate(addDays(it.date, 1)),
+        "SUMMARY:" + icsEscape(prog.label + " thesis: " + it.title),
+        "DESCRIPTION:" + icsEscape(desc),
+        "TRANSP:TRANSPARENT"
+      );
+      if (!it.isDefence) {
+        lines.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(it.title + " is due in one week"), "TRIGGER:-P7D", "END:VALARM");
+      }
+      lines.push("END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    return lines.map(fold).join("\r\n") + "\r\n";
+  }
+  function downloadICS() {
+    if (!lastItems) return;
+    var text = buildICS(lastItems, nameInput.value.trim());
+    var blob = new Blob([text], { type: "text/calendar;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "thesis-timeline-" + lastItems.key + "-" + toISO(lastItems.defence) + ".ics";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function copyLink(btn) {
+    var label = btn.querySelector("span");
+    function done(ok) {
+      label.textContent = ok ? "Link copied" : "Copy failed";
+      setTimeout(function () { label.textContent = "Copy link"; }, 2000);
+    }
+    var text = location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallbackCopy(text)); });
+    } else {
+      done(fallbackCopy(text));
+    }
+  }
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand("copy");
+      ta.remove();
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  /* ---------- Events ---------- */
+  form.addEventListener("change", render);
+  form.addEventListener("input", function (e) { if (e.target === nameInput || e.target === defenceInput) render(); });
+  form.addEventListener("submit", function (e) { e.preventDefault(); render(); });
+  results.addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    if (btn.dataset.set) { defenceInput.value = btn.dataset.set; render(); defenceInput.focus(); return; }
+    var action = btn.dataset.action;
+    if (action === "ics") downloadICS();
+    else if (action === "print") window.print();
+    else if (action === "copy") copyLink(btn);
+  });
+
+  readURL();
+  render();
+
+  /* Exposed for testing. */
+  window.ThesisPlanner = { compute: compute, earliestDefence: earliestDefence, parseISO: parseISO, toISO: toISO, buildICS: buildICS, PROGRAMS: PROGRAMS };
+})();
+</script>
+</body>
+</html>
