@@ -388,7 +388,7 @@
       <img class="site-logo site-logo-dark" src="assets/MItHRIL-horz-whitetext-colorrobot-clearback.png" alt="Machine Intelligence and Human-Robot Interaction Laboratory">
       <h1>Thesis Timeline Planner</h1>
       <p class="lede">Choose your degree and where you are in it. Before your proposal, the planner lays out a roadmap from your first term to your defence. After your proposal, it counts back from your defence to each thesis deadline.</p>
-      <p class="credit">Original idea by Jeff at the LAMP lab.</p>
+      <p class="credit">Original idea by <a href="https://www.queensu.ca/psychology/node/130" target="_blank" rel="noopener">Jeffrey Wammes</a> of the <a href="https://www.thelamplab.ca/" target="_blank" rel="noopener">LAMP Lab</a>.</p>
     </div>
   </header>
 
@@ -434,7 +434,7 @@
         <p class="hint">The term you started, or will start, your degree.</p>
       </div>
       <div class="field" data-mode="pre">
-        <label for="proposal">Planned proposal date before internship <span class="opt">(optional)</span></label>
+        <label for="proposal">Planned proposal or checkpoint date before internship <span class="opt">(optional)</span></label>
         <input type="date" id="proposal" name="proposal" min="2000-01-01" max="2100-12-31">
         <p class="hint" id="proposalHint">Leave blank to use the lab's default.</p>
       </div>
@@ -600,7 +600,7 @@
     }
   };
 
-  /* Steps before the proposal meeting, counted back from it. Same for both degrees. */
+  /* Ph.D. proposal steps, counted back from the proposal meeting. */
   var PROPOSAL_STEPS = [
     {
       id: "writingStart", title: "Start writing the proposal", before: "toCommittee", offset: { months: 2 },
@@ -620,8 +620,10 @@
     msc: {
       terms: 6,
       lengthText: "2 academic years (6 terms)",
-      proposalTerms: [4, 5],
-      proposalText: "the Fall or Winter term of Year 2",
+      proposalTerms: [2],
+      proposalText: "after the first two semesters (end of the second term)",
+      proposalTitle: "Preliminary proposal checkpoint",
+      proposalRule: "After the first two semesters, meet informally with your supervisor to confirm you have a solid plan for proceeding with your research. This is a supervisor checkpoint, not a proposal submitted to a committee.",
       items: [
         {
           id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
@@ -638,6 +640,7 @@
       lengthText: "4 academic years (12 terms)",
       proposalTerms: [6],
       proposalText: "the final term of Year 2 (Part II comprehensive exam)",
+      proposalTitle: "Part II comprehensive examination (thesis proposal)",
       items: [
         {
           id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
@@ -661,7 +664,7 @@
     }
   };
 
-  /* Proposal default: this day of the last month of the first proposal term. */
+  /* Ph.D. proposal default: this day of the last month of the first proposal term. */
   var DEFAULT_PROPOSAL_DAY = 15;
 
   /* Deadlines that land on a Saturday or Sunday move to the Friday before. */
@@ -867,12 +870,16 @@
     var pTerms = rm.proposalTerms.map(function (n) { return terms[n - 1]; });
     var windowFrom = afterPause(pTerms[0].start, pause), windowTo = afterPause(pTerms[pTerms.length - 1].end, pause);
     var windowText = pTerms.map(function (t) { return t.label; }).join(" or ");
-    var baselineProposalDefault = shift(new Date(pTerms[0].end.getFullYear(), pTerms[0].end.getMonth(), DEFAULT_PROPOSAL_DAY));
+    var baselineProposalDefault = key === "msc"
+      ? pTerms[0].end
+      : shift(new Date(pTerms[0].end.getFullYear(), pTerms[0].end.getMonth(), DEFAULT_PROPOSAL_DAY));
     var baselineProposal = proposalIn || baselineProposalDefault;
     var proposalDefault = afterPause(baselineProposalDefault, pause);
     var proposal = afterPause(baselineProposal, pause);
 
-    var pre = pauseItems(computeProposal(baselineProposal), pause).map(function (it) { return Object.assign(it, { group: "proposal" }); });
+    var pre = key === "msc"
+      ? []
+      : pauseItems(computeProposal(baselineProposal), pause).map(function (it) { return Object.assign(it, { group: "proposal" }); });
     if (key === "phd") {
       var partIIReport = pre.filter(function (it) { return it.id === "toCommittee"; })[0];
       partIIReport.title = "Submit Part II report to the department";
@@ -880,12 +887,12 @@
       partIIReport.links = ["compsForm"];
     }
     pre.push({
-      id: "proposal", title: key === "phd" ? "Part II comprehensive examination (thesis proposal)" : "Thesis proposal meeting", date: proposal, raw: proposal, isKey: true, group: "proposal",
+      id: "proposal", title: rm.proposalTitle, date: proposal, raw: proposal, isKey: true, group: "proposal",
       tag: windowText,
       rule: key === "phd"
         ? "Part II is your thesis proposal. The report is due within 22 months of starting and the examination must be held within two months of report submission. The lab plans this meeting for " + rm.proposalText + " (" + windowText + ")."
-        : "Your lab plans the proposal for " + rm.proposalText + " (" + windowText + "). Research and publication cycles continue throughout the degree.",
-      links: key === "phd" ? ["compsForm"] : ["proposalForm"]
+        : rm.proposalRule,
+      links: key === "phd" ? ["compsForm"] : []
     });
 
     var defenceDefault = addDays(shift(standardEnd), pauseDays);
@@ -1059,7 +1066,8 @@
   }
 
   /* ---------- Roadmap chart ---------- */
-  function roadmapChartHTML(r, now, generic) {
+  function roadmapChartHTML(r, now, generic, key) {
+    var rm = ROADMAPS[key];
     var maxDate = [r.defence, r.programEnd, r.proposal].reduce(function (a, b) { return a > b ? a : b; });
     var axis = r.terms.filter(function (t) { return t.start <= maxDate; });
     var a0 = axis[0].start, a1 = addDays(axis[axis.length - 1].end, 1);
@@ -1161,9 +1169,9 @@
       html += row(it.bar, pausedBar(it.date, to, it.barCls, it.bar + ": " + range(it.date, to)));
       if (it.overlap) html += row(it.overlap.bar, pausedBar(it.date, to, it.overlap.barCls, it.overlap.bar + ", alongside " + lowerFirst(it.bar) + ": " + range(it.date, to)));
     });
-    html += row("Proposal meeting",
+    html += row(rm.proposalTitle,
       '<span class="rm-window" style="left:' + pos(r.windowFrom).toFixed(2) + "%;width:" + (pos(addDays(r.windowTo, 1)) - pos(r.windowFrom)).toFixed(2) + '%" title="Lab window: ' + esc(r.windowText) + '"></span>' +
-      diamond(r.proposal, "", "Proposal meeting" + (generic ? "" : ": " + fmtLong.format(r.proposal))));
+      diamond(r.proposal, "", rm.proposalTitle + (generic ? "" : ": " + fmtLong.format(r.proposal))));
 
     // Thesis
     html += '<div class="rm-group">Thesis</div>';
@@ -1209,7 +1217,7 @@
       html += '<div class="summary"><div><h2>The ' + esc(prog.label) + " roadmap</h2>" +
         "<p>Choose your program start term and year above to put dates on this roadmap and get a dated list of deadlines.</p></div></div>";
       html += '<div class="card roadmap"><p class="eyebrow-sm">' + esc(prog.label) + " roadmap, " + esc(rm.lengthText) + "</p>" +
-        roadmapChartHTML(r, now, true) +
+        roadmapChartHTML(r, now, true, key) +
         '<p class="note">Shaded columns mark calendar years from program start. Cycle phases are illustrative three-month blocks, not deadlines; their timing and overlap vary by project. The summer publication push may overlap any phase. The dashed outline shows the proposal window; diamonds mark the proposal and defence.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
       html += plansHTML(r, true);
       results.innerHTML = html;
@@ -1226,7 +1234,7 @@
     html += '<p class="print-only">Generated ' + esc(fmtLong.format(now)) + ".</p>";
     html += '<div class="summary"><div>';
     html += "<h2>Your " + esc(prog.label) + " roadmap</h2>";
-    html += "<p>Started <strong>" + esc(r.terms[0].label) + "</strong>. Proposal on <strong>" + esc(fmtLong.format(r.proposal)) + "</strong>" +
+    html += "<p>Started <strong>" + esc(r.terms[0].label) + "</strong>. " + esc(rm.proposalTitle) + " on <strong>" + esc(fmtLong.format(r.proposal)) + "</strong>" +
       (r.usingProposalDefault ? " (default)" : "") + ". Defence on <strong>" + esc(fmtLong.format(r.defence)) + "</strong>" +
       (r.usingDefenceDefault ? " (default)" : "") + ".";
     if (nextItem && !nextItem.isKey) {
@@ -1235,10 +1243,10 @@
     html += "</p></div>" + actionsHTML() + "</div>";
 
     // Alerts
-    var proposalWritingStart = r.pre[0];
+    var proposalWritingStart = key === "phd" ? r.pre[0] : null;
     if (daysBetween(now, r.proposal) < 0) {
-      html += '<div class="alert warn"><p><strong>Your proposal date has passed.</strong> Choose "After my proposal" above to see your thesis deadlines.</p></div>';
-    } else if (daysBetween(now, proposalWritingStart.date) < 0) {
+      html += '<div class="alert warn"><p><strong>' + (key === "msc" ? "Your preliminary proposal checkpoint date has passed." : "Your proposal date has passed.") + '</strong> Choose "After my proposal" above to see your thesis deadlines.</p></div>';
+    } else if (proposalWritingStart && daysBetween(now, proposalWritingStart.date) < 0) {
       var ep = r.pause ? null : earliestProposal(now);
       html += '<div class="alert warn"><p><strong>Check your proposal preparation.</strong> The suggested proposal writing start was ' + esc(fmtLong.format(proposalWritingStart.date)) + ".</p>";
       if (ep) {
@@ -1259,14 +1267,14 @@
         (r.pause ? " plus the planned internship" : "") + ", ending on " + esc(fmtLong.format(r.programEnd)) + ". Talk with your supervisor about an extension.</p></div>";
     }
 
-    html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false) +
+    html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false, key) +
       '<p class="note">Shaded columns mark calendar years from program start. Cycle phases are illustrative three-month blocks, not deadlines; their timing and overlap vary by project. The internship pauses the plan; course bars are illustrative and actual offerings may not match. The dashed outline shows the adjusted lab proposal window. Confirm official deadlines and extensions with the department. Hover over a bar for its dates.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
     html += plansHTML(r, false);
 
     // Dated list by stage
     var groups = [
       { label: "Program", items: r.program.slice().sort(function (a, b) { return a.date - b.date; }) },
-      { label: "Before the proposal", items: r.pre },
+      { label: key === "msc" ? "Proposal checkpoint" : "Before the proposal", items: r.pre },
       { label: "Thesis", items: r.thesis }
     ];
     html += '<ol class="timeline">';
@@ -1393,13 +1401,15 @@
       rm.items.forEach(function (m) {
         html += "<li><strong>" + esc(m.title) + ".</strong> " + esc(m.rule) + "</li>";
       });
-      html += "<li><strong>Thesis proposal.</strong> In " + esc(rm.proposalText) + ".</li>";
+      html += "<li><strong>" + esc(rm.proposalTitle) + ".</strong> " + esc(rm.proposalRule || ("In " + rm.proposalText + ".")) + "</li>";
       html += "<li>See the ECE current graduate student resources for program reporting requirements.</li></ul>";
-      html += "<h3>Before the proposal</h3><ul>";
-      PROPOSAL_STEPS.forEach(function (m) {
-        html += "<li><strong>" + esc(m.bar) + ".</strong> " + esc(m.rule) + "</li>";
-      });
-      html += "</ul>";
+      if (key === "phd") {
+        html += "<h3>Before the proposal</h3><ul>";
+        PROPOSAL_STEPS.forEach(function (m) {
+          html += "<li><strong>" + esc(m.bar) + ".</strong> " + esc(m.rule) + "</li>";
+        });
+        html += "</ul>";
+      }
       html += "<h3>Thesis</h3>";
     }
     html += "<ul>";
