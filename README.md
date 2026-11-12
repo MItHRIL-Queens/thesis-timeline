@@ -1,12 +1,12 @@
 # Thesis Timeline Planner
 
-A one-page planner for graduate students in the Sensorimotor Exploration Laboratory (SMEL), School of Kinesiology and Health Studies, Queen's University.
+A one-page planner for graduate students in the Machine Intelligence and Human-Robot Interaction Laboratory (MItHRIL), in Smith Engineering's Electrical and Computer Engineering Department at Queen's University.
 
 Original idea by Jeff at the LAMP lab.
 
 Students choose M.Sc. or Ph.D. and where to start the countdown:
 
-- **Before my proposal.** A roadmap from the first term to the defence: coursework, directed research project, comprehensive exam (Ph.D.), the proposal countdown, and the thesis deadlines.
+- **Before my proposal.** A roadmap from the first term to the defence: coursework, thesis research, the two-part Ph.D. comprehensive exam (Part II is the thesis proposal), the proposal countdown, and the thesis deadlines.
 - **After my proposal.** The thesis deadlines, counted back from the planned defence date.
 
 ## Program roadmap
@@ -14,9 +14,10 @@ Students choose M.Sc. or Ph.D. and where to start the countdown:
 | | M.Sc. (2 years, 6 terms) | Ph.D. (4 years, 12 terms) |
 |---|---|---|
 | Coursework | Year 1 | Year 1 |
-| Directed research project | Year 1 | Years 1 and 2 |
-| Comprehensive exam | | Starts term 3, finished within 18 months |
-| Thesis proposal | Fall or Winter of Year 2 | Fall of Year 3 |
+| Thesis research | Throughout the 2-year program | Throughout the 4-year program |
+| Part I comprehensive exam | | Report within 10 months; exam within 2 months of report |
+| Part II comprehensive exam (thesis proposal) | | Report within 22 months; exam within 2 months of report |
+| Thesis proposal | Fall or Winter of Year 2 | Final term of Year 2 (Part II) |
 
 ## Proposal countdown (both degrees)
 
@@ -42,7 +43,7 @@ Analysis and writing run alongside thesis data collection, and pilot analysis ru
 
 ## Guidebooks and forms
 
-The bottom of the page links to the SGSPA supervision guidebooks (Setting Expectations, Productive Supervisory Relationships, the Graduate Supervision Handbook and Policy), the SKHS M.Sc. and Ph.D. completion steps, the oral exam forms, the Standards for Graduate Theses, the Permission of Co-Authors Form, convocation deadlines, and writing and support resources. The links live in the `resources` section of `index.html`.
+The bottom of the page links to ECE MASc and Ph.D. program requirements, current graduate student resources, and the Ph.D. comprehensive examination policy, as well as SGSPA supervision guidance, oral examination forms, thesis standards, convocation deadlines, and writing and support resources. The links live in the `resources` section of `index.html`.
 
 ## Changing the rules
 
