@@ -19,26 +19,26 @@ Students choose M.A.Sc. or Ph.D. and where to start the countdown:
 | Part II comprehensive exam (thesis proposal) | | Report within 22 months; exam within 2 months of report |
 | Thesis proposal | Fall or Winter of Year 2 | Final term of Year 2 (Part II) |
 
-MItHRIL expects a paper or journal publication each year, with a main push every summer. The roadmap marks the summer publication periods; these are planning goals, not fixed submission deadlines.
+The manuscript-style thesis is built from publications. MItHRIL expects a paper or journal publication each year, with a main push every summer. Each annual cycle progresses from robot algorithm or hardware development, to experiment planning, data collection and analysis, and writing for publication. The roadmap illustrates each phase as three months, but actual timing and overlap vary by project; these are planning goals, not fixed deadlines.
 
 The optional course planner offers MItHRIL's fall ELEC 844 and 870 and winter ELEC 842, 845 and 848, or a free-text alternative for each slot. Selected courses appear in their respective first-year terms on the roadmap. Check the [ECE graduate course page](https://smithengineering.queensu.ca/ece/graduate/courses.html) for descriptions, current offerings and registration details; confirm course choices and degree requirements with your supervisor.
 
-An optional internship can start on any date and last 3–12 months. Its displayed end date is exclusive. It appears on the dated roadmap when it overlaps the chart; the planner warns if it extends outside the program or beyond the defence, but does not automatically reschedule thesis deadlines. In the after-proposal view only the defence boundary can be checked.
+An optional internship of 3–12 months pauses the thesis plan and adds its actual calendar duration to it. Its displayed end date is exclusive. Events on or after the internship starts are delayed by that duration, while earlier events remain unchanged; chart activities are interrupted and resume after the internship. Enter proposal and defence dates as they were planned **before** the internship; the displayed dates, milestones and calendar export include the pause. The before-proposal view requires a program start to apply it and checks the start against the program and pre-internship defence. The after-proposal view checks against the pre-internship defence but cannot check the program start.
+
+The adjusted dates are planning dates, not approved extensions of university deadlines. Confirm exam deadlines, course availability, leave and extensions with the supervisor and department. Course bars and labels are illustrative, not actual rescheduled class offerings. Summer publication pushes follow the calendar and pause during the internship.
 
 ## Proposal countdown (both degrees)
 
-Counted back from the proposal meeting: pilot data collection (1 semester, about 4 months) with pilot analysis alongside it, pilot data summary and synthesis (1 month), proposal writing and revisions (1 to 2 months, the planner allows 2), proposal to committee (2 months before the meeting).
+Counted back from the proposal meeting: proposal writing and revisions (1 to 2 months, the planner allows 2), and proposal to committee (2 months before the meeting). Research and publication cycles continue alongside proposal work.
 
 ## Thesis deadlines
 
-| Degree | Data collection complete | First full draft to supervisor | Thesis to committee |
-|---|---|---|---|
-| M.A.Sc. | At least 2 months before the first draft | At least 2 months before the thesis goes to the committee | At least 1 month before the defence |
-| Ph.D. | At least 2 months before the first draft | At least 3 months before the thesis goes to the committee | At least 8 weeks before the defence |
+| Degree | First full draft to supervisor | Thesis to committee |
+|---|---|---|
+| M.A.Sc. | At least 2 months before the thesis goes to the committee | At least 1 month before the defence |
+| Ph.D. | At least 3 months before the thesis goes to the committee | At least 8 weeks before the defence |
 
-A deadline that lands on a weekend moves to the Friday before. Students who have already finished data collection can tick a box so that milestone shows as finished and does not trigger a warning.
-
-Analysis and writing run alongside thesis data collection, and pilot analysis runs alongside pilot data collection. The roadmap shows these as overlapping bars. The 2 months after the last thesis data are for data summary, synthesis and formatting. The month after the last pilot data is for pilot data summary and synthesis.
+Baseline deadlines that land on a weekend move to the Friday before; an internship then shifts affected planning dates by its actual duration, which may place them on a weekend. There is no single thesis-wide data collection deadline: data collection and analysis happen within each publication cycle.
 
 ## Features
 
@@ -67,6 +67,6 @@ Thesis deadlines live in the `PROGRAMS` block near the top of the script in `ind
 }
 ```
 
-Offsets accept `months`, `weeks` or `days`. Add a new milestone by giving it an `id` and pointing `before` at the milestone it precedes.
+Offsets accept `months`, `weeks` or `days`. Add a new milestone by giving it an `id` and pointing `before` at the milestone it precedes. The internship pause is applied to the resulting baseline dates.
 
-The page is plain HTML with no build step. GitHub Pages serves it from the `main` branch.
+The page is plain HTML with no build step. Run `node --test test/timeline.test.js` for the timeline regression tests. GitHub Pages serves it from the `main` branch.

@@ -434,17 +434,14 @@
         <p class="hint">The term you started, or will start, your degree.</p>
       </div>
       <div class="field" data-mode="pre">
-        <label for="proposal">Planned proposal date <span class="opt">(optional)</span></label>
+        <label for="proposal">Planned proposal date before internship <span class="opt">(optional)</span></label>
         <input type="date" id="proposal" name="proposal" min="2000-01-01" max="2100-12-31">
         <p class="hint" id="proposalHint">Leave blank to use the lab's default.</p>
       </div>
       <div class="field">
-        <label for="defence">Planned defence date <span class="opt" id="defenceOpt">(optional)</span></label>
+        <label for="defence">Planned defence date before internship <span class="opt" id="defenceOpt">(optional)</span></label>
         <input type="date" id="defence" name="defence" min="2000-01-01" max="2100-12-31">
         <p class="hint" id="defenceHint">The date you expect to defend and finish your degree.</p>
-      </div>
-      <div class="field check-field" data-mode="post">
-        <label class="check"><input type="checkbox" id="dataDone" name="dataDone" value="dataCollection"><span>My data collection is already finished</span></label>
       </div>
       <fieldset class="planner-section">
         <legend>First-year course planner <span class="opt">(optional)</span></legend>
@@ -474,7 +471,7 @@
       </fieldset>
       <fieldset class="planner-section">
         <legend>Internship <span class="opt">(optional)</span></legend>
-        <p class="hint">Plan an internship of 3 to 12 months at any point in your thesis. Discuss its timing and any impact on your degree with your supervisor; thesis deadlines are not automatically moved.</p>
+        <p class="hint">An internship of 3 to 12 months pauses the thesis plan. Enter proposal and defence dates before the internship: planned events on or after its start are delayed until it ends. Confirm university deadlines, course availability, leave and extensions with your supervisor and department.</p>
         <div class="planner-grid">
           <div class="field"><label for="internStart">Internship start date</label><input type="date" id="internStart" min="2000-01-01" max="2100-12-31"></div>
           <div class="field"><label for="internMonths">Duration</label><select id="internMonths"><option value="">Choose duration</option><option value="3">3 months</option><option value="4">4 months</option><option value="5">5 months</option><option value="6">6 months</option><option value="7">7 months</option><option value="8">8 months</option><option value="9">9 months</option><option value="10">10 months</option><option value="11">11 months</option><option value="12">12 months</option></select></div>
@@ -546,26 +543,13 @@
 
   /* Thesis deadlines, counted back from the defence.
      "before" names the later milestone. Offsets use months, weeks or days. */
-  var DATA_COLLECTION = {
-    id: "dataCollection",
-    title: "Thesis data collection complete",
-    before: "firstDraft",
-    offset: { months: 2 },
-    rule: "At least 2 months before the first full draft goes to your supervisor.",
-    action: "finish data collection",
-    lead: "Data collection", leadCls: "collect", leadNote: "Today until data collection must be complete",
-    next: "Data summary, synthesis and formatting", nextCls: "synth"
-  };
-
-  /* Shown as a note for both degrees. */
-  var WRITING_NOTE = "Analysis and writing run alongside thesis data collection, not only after it. The 2 months after the last data are collected are for data summary, synthesis and formatting before the first full draft goes to your supervisor.";
+  var WRITING_NOTE = "The manuscript-style thesis is built from publications. Each research cycle includes development, experiment planning, data collection and analysis, and writing for publication. Assemble and revise the thesis with your supervisor before the final submission deadlines.";
 
   var PROGRAMS = {
     msc: {
       label: "M.A.Sc.",
       note: WRITING_NOTE,
       milestones: [
-        DATA_COLLECTION,
         {
           id: "firstDraft",
           title: "First full draft to supervisor",
@@ -573,7 +557,7 @@
           offset: { months: 2 },
           rule: "At least 2 months before the thesis goes to the committee.",
           action: "send your first full draft to your supervisor",
-          lead: "Writing time", leadCls: "write", leadNote: "Today until the first full draft is due",
+          lead: "Manuscripts and thesis assembly", leadCls: "write", leadNote: "Research cycles and thesis assembly until the first full draft is due",
           next: "Supervisor review and revisions", nextCls: "review"
         },
         {
@@ -592,7 +576,6 @@
       label: "Ph.D.",
       note: WRITING_NOTE,
       milestones: [
-        DATA_COLLECTION,
         {
           id: "firstDraft",
           title: "First full draft to supervisor",
@@ -600,7 +583,7 @@
           offset: { months: 3 },
           rule: "At least 3 months before the thesis goes to the committee.",
           action: "send your first full draft to your supervisor",
-          lead: "Writing time", leadCls: "write", leadNote: "Today until the first full draft is due",
+          lead: "Manuscripts and thesis assembly", leadCls: "write", leadNote: "Research cycles and thesis assembly until the first full draft is due",
           next: "Supervisor review and revisions", nextCls: "review"
         },
         {
@@ -620,18 +603,8 @@
   /* Steps before the proposal meeting, counted back from it. Same for both degrees. */
   var PROPOSAL_STEPS = [
     {
-      id: "pilotStart", title: "Start pilot data collection", before: "pilotDone", offset: { months: 4 },
-      rule: "Pilot data collection takes one semester (about 4 months). Analyse the pilot data as they come in.", action: "start pilot data collection",
-      bar: "Pilot data collection", barCls: "collect", overlap: { bar: "Pilot analysis", barCls: "analyze" }
-    },
-    {
-      id: "pilotDone", title: "Pilot data collection complete", before: "writingStart", offset: { months: 1 },
-      rule: "Leave 1 month after the last pilot data to summarize and synthesize the results before you start writing.",
-      bar: "Pilot data summary and synthesis", barCls: "synth"
-    },
-    {
       id: "writingStart", title: "Start writing the proposal", before: "toCommittee", offset: { months: 2 },
-      rule: "Pilot analysis is done. Proposal writing and revisions with your supervisor take 1 to 2 months. The planner allows 2.",
+      rule: "Proposal writing and revisions with your supervisor take 1 to 2 months. The planner allows 2; research and publication cycles can continue alongside this work.",
       bar: "Proposal writing and revisions", barCls: "write"
     },
     {
@@ -721,7 +694,6 @@
   var proposalInput = document.getElementById("proposal");
   var startTermInput = document.getElementById("startTerm");
   var startYearInput = document.getElementById("startYear");
-  var dataDoneInput = document.getElementById("dataDone");
   var courseInputs = Array.from(form.querySelectorAll(".course"));
   var internStartInput = document.getElementById("internStart");
   var internMonthsInput = document.getElementById("internMonths");
@@ -812,7 +784,6 @@
   /* ---------- Thesis timeline (counted back from the defence) ---------- */
   function compute(key, defence) {
     var items = resolve(PROGRAMS[key].milestones, { defence: defence });
-    if (PROGRAMS[key].note) items.forEach(function (it) { if (it.id === "dataCollection") it.caveat = PROGRAMS[key].note; });
     items.push({ id: "defence", title: "Thesis defence", rule: "Your planned defence date.", date: defence, raw: defence, isKey: true, isDefence: true });
     items.sort(function (a, b) { return a.date - b.date; });
     return items;
@@ -840,7 +811,7 @@
     return null;
   }
 
-  /* Earliest weekday proposal whose pilot start is today or later. */
+  /* Earliest weekday proposal whose writing start is today or later. */
   function earliestProposal(from) {
     var c = addDays(from, 1);
     for (var i = 0; i < 1500; i++) {
@@ -856,29 +827,56 @@
     return a === b ? "Year " + a : "Years " + a + " and " + b;
   }
 
-  function computeRoadmap(key, startYear, startKey, proposalIn, defenceIn) {
+  function afterPause(date, pause) {
+    return pause && date >= pause.start ? addDays(date, daysBetween(pause.start, pause.end)) : date;
+  }
+
+  function pauseItems(items, pause) {
+    return items.map(function (item) {
+      var moved = pause && item.date >= pause.start;
+      return Object.assign({}, item, {
+        date: afterPause(item.date, pause),
+        raw: afterPause(item.raw, pause),
+        pauseShifted: !!moved,
+        rule: item.rule + (moved ? " This planning date includes the internship pause; confirm official deadlines and any required approval." : "")
+      });
+    });
+  }
+
+  function computeRoadmap(key, startYear, startKey, proposalIn, defenceIn, placement) {
     var rm = ROADMAPS[key];
     var terms = makeTerms(startYear, startKey, rm.terms + 9);
-    var programEnd = terms[rm.terms - 1].end;
+    var standardEnd = terms[rm.terms - 1].end;
+    var baselineDefence = defenceIn || shift(standardEnd);
+    var pause = placement && placement.start >= terms[0].start && placement.start <= baselineDefence ? placement : null;
+    var pauseDays = pause ? daysBetween(pause.start, pause.end) : 0;
+    var programEnd = addDays(standardEnd, pauseDays);
 
     var program = rm.items.map(function (it) {
       var from = terms[it.fromTerm - 1].start;
       var raw = it.dueMonths ? addDays(addMonths(terms[0].start, it.dueMonths), -1) : terms[it.toTerm - 1].end;
       var tag = it.dueMonths ? "Term " + it.fromTerm + " to month " + it.dueMonths : yearsTag(it.fromTerm, it.toTerm);
-      return Object.assign({}, it, { from: from, raw: raw, date: shift(raw), tag: tag, group: "program" });
+      var planned = shift(raw);
+      var moved = pause && planned >= pause.start;
+      return Object.assign({}, it, {
+        from: from, raw: afterPause(raw, pause), date: afterPause(planned, pause), tag: tag, group: "program", pauseShifted: !!moved,
+        rule: it.rule + (moved ? " This planning date includes the internship pause; confirm official deadlines and any required approval." : "")
+      });
     });
 
     var pTerms = rm.proposalTerms.map(function (n) { return terms[n - 1]; });
-    var windowFrom = pTerms[0].start, windowTo = pTerms[pTerms.length - 1].end;
+    var windowFrom = afterPause(pTerms[0].start, pause), windowTo = afterPause(pTerms[pTerms.length - 1].end, pause);
     var windowText = pTerms.map(function (t) { return t.label; }).join(" or ");
-    var proposalDefault = shift(new Date(pTerms[0].end.getFullYear(), pTerms[0].end.getMonth(), DEFAULT_PROPOSAL_DAY));
-    var proposal = proposalIn || proposalDefault;
+    var baselineProposalDefault = shift(new Date(pTerms[0].end.getFullYear(), pTerms[0].end.getMonth(), DEFAULT_PROPOSAL_DAY));
+    var baselineProposal = proposalIn || baselineProposalDefault;
+    var proposalDefault = afterPause(baselineProposalDefault, pause);
+    var proposal = afterPause(baselineProposal, pause);
 
-    var pre = computeProposal(proposal).map(function (it) { return Object.assign(it, { group: "proposal" }); });
+    var pre = pauseItems(computeProposal(baselineProposal), pause).map(function (it) { return Object.assign(it, { group: "proposal" }); });
     if (key === "phd") {
       var partIIReport = pre.filter(function (it) { return it.id === "toCommittee"; })[0];
       partIIReport.title = "Submit Part II report to the department";
-      partIIReport.rule = "Part II is your thesis proposal. Submit its report within 22 months of starting the program; the Part II examination must be held no later than two months after submission.";
+      partIIReport.rule = "Part II is your thesis proposal. Submit its report within 22 months of starting the program; the Part II examination must be held no later than two months after submission. Confirm official deadlines and any approved extension with the department.";
       partIIReport.links = ["compsForm"];
     }
     pre.push({
@@ -886,26 +884,19 @@
       tag: windowText,
       rule: key === "phd"
         ? "Part II is your thesis proposal. The report is due within 22 months of starting and the examination must be held within two months of report submission. The lab plans this meeting for " + rm.proposalText + " (" + windowText + ")."
-        : "Your lab plans the proposal for " + rm.proposalText + " (" + windowText + "). Thesis data collection starts after the proposal is approved.",
+        : "Your lab plans the proposal for " + rm.proposalText + " (" + windowText + "). Research and publication cycles continue throughout the degree.",
       links: key === "phd" ? ["compsForm"] : ["proposalForm"]
     });
 
-    var defenceDefault = shift(programEnd);
-    var defence = defenceIn || defenceDefault;
-    var thesis = compute(PROGRAMS[key] ? key : "msc", defence).map(function (it) { return Object.assign(it, { group: "thesis" }); });
-    var dc = thesis.filter(function (it) { return it.id === "dataCollection"; })[0];
-    var dcDays = daysBetween(proposal, dc.date);
-    dc.extra = dcDays > 0
-      ? "This leaves " + span(dcDays) + " for thesis data collection after your proposal."
-      : "This is before your proposal. There is no time for thesis data collection.";
-    dc.extraBad = dcDays <= 0;
-
+    var defenceDefault = addDays(shift(standardEnd), pauseDays);
+    var defence = addDays(baselineDefence, pauseDays);
+    var thesis = pauseItems(compute(PROGRAMS[key] ? key : "msc", baselineDefence), pause).map(function (it) { return Object.assign(it, { group: "thesis" }); });
     return {
       terms: terms, programEnd: programEnd, program: program, pre: pre, thesis: thesis,
+      standardEnd: standardEnd, baselineDefence: baselineDefence, pause: pause, pauseDays: pauseDays,
       proposal: proposal, proposalDefault: proposalDefault, usingProposalDefault: !proposalIn,
       defence: defence, defenceDefault: defenceDefault, usingDefenceDefault: !defenceIn,
-      windowFrom: windowFrom, windowTo: windowTo, windowText: windowText, pTerms: pTerms,
-      dataCollection: dc, dcDays: dcDays
+      windowFrom: windowFrom, windowTo: windowTo, windowText: windowText, pTerms: pTerms
     };
   }
 
@@ -987,8 +978,9 @@
   function plansHTML(r, generic) {
     var courses = selectedCourses();
     var html = '<div class="card plan-summary"><h3>Courses and publications</h3>';
-    html += "<p>MItHRIL expects a paper or journal publication each year, with a main push every summer. Plan publication work throughout the year with your supervisor.</p>";
+    html += "<p>MItHRIL expects a paper or journal publication each year, with a main push every summer. Each cycle typically progresses from robot algorithm or hardware development to experiment planning, data collection and analysis, and writing for publication. The resulting manuscripts form the thesis. Plan the timing with your supervisor.</p>";
     if (courses.length) {
+      if (r && r.pause) html += "<p>Course term labels below are the original plan before the internship; confirm actual offerings and rescheduling with the department.</p>";
       ["fall", "winter"].forEach(function (term) {
         var names = courses.filter(function (c) { return c.term === term; }).map(function (c) { return esc(c.name); });
         if (!names.length) return;
@@ -1003,11 +995,19 @@
     var placement = internship();
     if (placement) {
       html += '<div class="card plan-summary"><h3>Internship</h3><p>' + esc(fmtLong.format(placement.start)) + " to " + esc(fmtLong.format(placement.end)) +
-        " (" + plural(placement.months, "month") + "; end date is exclusive). Thesis deadlines remain unchanged.</p></div>";
-      if (r && !generic && (placement.start < r.terms[0].start || placement.end > addDays(r.defence, 1))) {
-        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship starts before your program or ends after your planned defence. Discuss the timing with your supervisor.</p></div>';
-      } else if (!r && parseISO(defenceInput.value) && placement.end > addDays(parseISO(defenceInput.value), 1)) {
-        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship ends after your planned defence. Discuss the timing with your supervisor.</p></div>';
+        " (" + plural(placement.months, "month") + "; end date is exclusive).";
+      if (r && !generic && r.pause) {
+        html += " The internship pauses the plan for " + plural(r.pauseDays, "day") + "; events at or after its start resume after it ends.";
+      } else if (!r && parseISO(defenceInput.value) && placement.start <= parseISO(defenceInput.value)) {
+        html += " The internship pauses the plan for " + plural(daysBetween(placement.start, placement.end), "day") + "; events at or after its start resume after it ends.";
+      } else {
+        html += " Enter a program start and a valid internship date within the degree to calculate the extension.";
+      }
+      html += " These are planning dates, not approved extensions of university deadlines. Confirm courses, exams, leave and extensions with your supervisor and department.</p></div>";
+      if (r && !generic && (!r.pause || placement.end > addDays(r.defence, 1))) {
+        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship starts before your program or after your defence plan, or ends after the extended defence. Discuss the timing with your supervisor.</p></div>';
+      } else if (!r && parseISO(defenceInput.value) && placement.start > parseISO(defenceInput.value)) {
+        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship starts after your defence plan and has not been added to it. Discuss the timing with your supervisor.</p></div>';
       }
     } else if (internStartInput.value || internMonthsInput.value) {
       html += '<div class="alert warn"><p><strong>Internship not yet planned.</strong> Enter a valid start date and a duration of 3 to 12 months.</p></div>';
@@ -1049,7 +1049,7 @@
     html += '<p class="rule">' + esc(it.rule) + "</p>";
     if (it.extra) html += '<p class="extra' + (it.extraBad ? " bad" : "") + '">' + esc(it.extra) + "</p>";
     if (it.caveat) html += '<p class="caveat">Note: ' + esc(it.caveat) + "</p>";
-    if (!it.isKey && !it.done && it.raw && daysBetween(it.raw, it.date) !== 0) {
+    if (!it.isKey && !it.done && !it.pauseShifted && it.raw && daysBetween(it.raw, it.date) !== 0) {
       html += '<p class="moved">Moved from ' + esc(DAY_NAMES[it.raw.getDay()]) + " " + esc(fmtShort.format(it.raw)) + " because it falls on a weekend.</p>";
     }
     html += linksHTML(it.links);
@@ -1076,6 +1076,13 @@
     function row(label, inner) {
       return '<div class="rm-row"><div class="rm-label">' + esc(label) + '</div><div class="rm-track">' + inner + "</div></div>";
     }
+    function pausedBar(from, to, cls, title) {
+      if (to <= from) return "";
+      if (!r.pause || to <= r.pause.start || from >= r.pause.end) return bar(from, to, cls, title);
+      var before = from < r.pause.start ? bar(from, r.pause.start, cls, title) : "";
+      var after = to > r.pause.end ? bar(r.pause.end, to, cls, title) : "";
+      return before + after;
+    }
 
     var html = '<div class="rm-scroll"><div class="rm" style="--n:' + axis.length + '">';
 
@@ -1098,15 +1105,48 @@
     // Program
     html += '<div class="rm-group">Program</div>';
     r.program.forEach(function (it) {
-      html += row(it.bar, bar(it.from, it.date, "early", it.bar + ": " + range(it.from, it.date)));
+      html += row(it.bar, pausedBar(afterPause(it.from, r.pause), it.date, "early", it.bar + ": " + range(afterPause(it.from, r.pause), it.date)));
     });
     selectedCourses().forEach(function (course) {
       var term = r.terms.slice(0, 3).filter(function (t) { return t.name.toLowerCase() === course.term; })[0];
-      html += row(course.name, bar(term.start, addDays(term.end, 1), "analyze", course.name + ": " + (generic ? term.name : term.label)));
+      html += row(course.name, pausedBar(afterPause(term.start, r.pause), afterPause(addDays(term.end, 1), r.pause), "analyze", course.name + ": " + (generic ? term.name : term.label) + " (planning only; confirm actual offering)"));
     });
-    var summers = r.terms.slice(0, ROADMAPS[currentKey()].terms).filter(function (t) { return t.name === "Summer"; });
+    html += '<div class="rm-group">Annual manuscript cycles</div>';
+    var cycleEnd = generic ? addDays(r.programEnd, 1) : new Date(Math.min(addDays(r.programEnd, 1), addDays(r.defence, 1)));
+    function cycleBars(start, end, phase, year) {
+      var periods = [];
+      if (r.pause && start < r.pause.start && end > r.pause.start) {
+        periods.push({ start: start, end: r.pause.start });
+        periods.push({ start: r.pause.end, end: addDays(end, r.pauseDays) });
+      } else if (r.pause && start >= r.pause.start) {
+        periods.push({ start: addDays(start, r.pauseDays), end: addDays(end, r.pauseDays) });
+      } else {
+        periods.push({ start: start, end: end });
+      }
+      return periods.map(function (p) {
+        if (p.start >= cycleEnd) return "";
+        var end = p.end > cycleEnd ? cycleEnd : p.end;
+        return bar(p.start, end, phase.cls, phase.label + " (illustrative, Year " + (year + 1) + "): " + range(p.start, end));
+      }).join("");
+    }
+    var cyclePhases = [
+      { label: "Algorithm / hardware development", cls: "early" },
+      { label: "Experiment planning", cls: "analyze" },
+      { label: "Data collection and analysis", cls: "collect" },
+      { label: "Writing for publication", cls: "write" }
+    ];
+    cyclePhases.forEach(function (phase, phaseIndex) {
+      var bars = "";
+      for (var year = 0; year < ROADMAPS[currentKey()].terms / 3; year++) {
+        var start = addMonths(r.terms[0].start, year * 12 + phaseIndex * 3);
+        var end = addMonths(r.terms[0].start, year * 12 + (phaseIndex + 1) * 3);
+        bars += cycleBars(start, end, phase, year);
+      }
+      html += row(phase.label, bars);
+    });
+    var summers = r.terms.filter(function (t) { return t.name === "Summer" && t.start < cycleEnd; });
     html += row("Publication push", summers.map(function (t) {
-      return bar(t.start, addDays(t.end, 1), "write", "Annual publication push: " + (generic ? "Summer, Year " + t.progYear : t.label));
+      return pausedBar(t.start, new Date(Math.min(addDays(t.end, 1), cycleEnd)), "write", "Annual publication push: " + (generic ? "Summer, Year " + t.progYear : t.label));
     }).join(""));
     var placement = internship();
     if (placement && !generic && placement.start < a1 && placement.end > a0) {
@@ -1118,8 +1158,8 @@
     var pre = r.pre.filter(function (it) { return it.bar; });
     pre.forEach(function (it, i) {
       var to = i + 1 < r.pre.length ? r.pre[i + 1].date : r.proposal;
-      html += row(it.bar, bar(it.date, to, it.barCls, it.bar + ": " + range(it.date, to)));
-      if (it.overlap) html += row(it.overlap.bar, bar(it.date, to, it.overlap.barCls, it.overlap.bar + ", alongside " + lowerFirst(it.bar) + ": " + range(it.date, to)));
+      html += row(it.bar, pausedBar(it.date, to, it.barCls, it.bar + ": " + range(it.date, to)));
+      if (it.overlap) html += row(it.overlap.bar, pausedBar(it.date, to, it.overlap.barCls, it.overlap.bar + ", alongside " + lowerFirst(it.bar) + ": " + range(it.date, to)));
     });
     html += row("Proposal meeting",
       '<span class="rm-window" style="left:' + pos(r.windowFrom).toFixed(2) + "%;width:" + (pos(addDays(r.windowTo, 1)) - pos(r.windowFrom)).toFixed(2) + '%" title="Lab window: ' + esc(r.windowText) + '"></span>' +
@@ -1128,15 +1168,15 @@
     // Thesis
     html += '<div class="rm-group">Thesis</div>';
     var th = r.thesis;
-    var thesisRows = [
-      { label: "Thesis data collection", from: r.proposal, to: th[0].date, cls: "collect" },
-      { label: "Analysis and writing", from: r.proposal, to: th[0].date, cls: "write" }
-    ];
+    var thesisRows = [];
+    if (r.terms[0].start < th[0].date) {
+      thesisRows.push({ label: "Manuscripts and thesis assembly", from: r.terms[0].start, to: th[0].date, cls: "write" });
+    }
     for (var k = 0; k < th.length - 1; k++) {
       thesisRows.push({ label: th[k].next, from: th[k].date, to: th[k + 1].date, cls: th[k].nextCls });
     }
     thesisRows.forEach(function (s) {
-      html += row(s.label, s.to > s.from ? bar(s.from, s.to, s.cls, s.label + ": " + range(s.from, s.to)) : "");
+      html += row(s.label, pausedBar(s.from, s.to, s.cls, s.label + ": " + range(s.from, s.to)));
     });
     html += row("Defence", diamond(r.defence, "defence", "Defence" + (generic ? "" : ": " + fmtLong.format(r.defence))));
 
@@ -1154,14 +1194,14 @@
     var proposalIn = parseISO(proposalInput.value);
     var defenceIn = parseISO(defenceInput.value);
     var s = start || { year: now.getFullYear(), term: "fall" };
-    var r = computeRoadmap(key, s.year, s.term, generic ? null : proposalIn, generic ? null : defenceIn);
+    var r = computeRoadmap(key, s.year, s.term, generic ? null : proposalIn, generic ? null : defenceIn, generic ? null : internship());
 
     proposalHint.textContent = generic
       ? "Leave blank to use " + fmtMonthDay.format(r.proposalDefault) + " in " + rm.proposalText + "."
-      : "Leave blank to use " + fmtLong.format(r.proposalDefault) + ", in " + rm.proposalText + ".";
+      : "Leave blank to use " + fmtLong.format(r.proposalDefault) + (r.pause ? " after the internship adjustment." : ", in " + rm.proposalText + ".") + " Enter a date before the internship.";
     defenceHint.textContent = generic
       ? "Leave blank to use the end of the standard program length, " + rm.lengthText + "."
-      : "Leave blank to use the end of the standard program length: " + fmtLong.format(r.defenceDefault) + ".";
+      : "Leave blank to use the end of the standard program length" + (r.pause ? " plus internship time" : "") + ": " + fmtLong.format(r.defenceDefault) + ". Entered dates are also extended by the internship.";
 
     var html = "";
     if (generic) {
@@ -1170,7 +1210,7 @@
         "<p>Choose your program start term and year above to put dates on this roadmap and get a dated list of deadlines.</p></div></div>";
       html += '<div class="card roadmap"><p class="eyebrow-sm">' + esc(prog.label) + " roadmap, " + esc(rm.lengthText) + "</p>" +
         roadmapChartHTML(r, now, true) +
-        '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Diamonds mark the proposal meeting and the defence.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
+        '<p class="note">Shaded columns mark calendar years from program start. Cycle phases are illustrative three-month blocks, not deadlines; their timing and overlap vary by project. The summer publication push may overlap any phase. The dashed outline shows the proposal window; diamonds mark the proposal and defence.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
       html += plansHTML(r, true);
       results.innerHTML = html;
       return;
@@ -1195,33 +1235,32 @@
     html += "</p></div>" + actionsHTML() + "</div>";
 
     // Alerts
-    var pilotStart = r.pre[0];
+    var proposalWritingStart = r.pre[0];
     if (daysBetween(now, r.proposal) < 0) {
       html += '<div class="alert warn"><p><strong>Your proposal date has passed.</strong> Choose "After my proposal" above to see your thesis deadlines.</p></div>';
-    } else if (daysBetween(now, pilotStart.date) < 0) {
-      var ep = earliestProposal(now);
-      html += '<div class="alert danger"><p><strong>This proposal date leaves too little time.</strong> Pilot data collection needed to start by ' + esc(fmtLong.format(pilotStart.date)) + ".</p>";
+    } else if (daysBetween(now, proposalWritingStart.date) < 0) {
+      var ep = r.pause ? null : earliestProposal(now);
+      html += '<div class="alert warn"><p><strong>Check your proposal preparation.</strong> The suggested proposal writing start was ' + esc(fmtLong.format(proposalWritingStart.date)) + ".</p>";
       if (ep) {
-        html += "<p>If you start pilot data collection today, the earliest proposal meeting that fits is <strong>" + esc(fmtLong.format(ep)) + "</strong>. " +
+        html += "<p>If you start proposal writing today, the earliest meeting that fits the suggested preparation time is <strong>" + esc(fmtLong.format(ep)) + "</strong>. " +
           '<button type="button" class="linkbtn" data-set-proposal="' + toISO(ep) + '">Use this date</button></p>';
       }
       html += "</div>";
     }
-    if (r.dcDays <= 0) {
-      html += '<div class="alert danger"><p><strong>The proposal and defence dates do not fit together.</strong> For a defence on ' + esc(fmtLong.format(r.defence)) +
-        ", thesis data collection must be finished by " + esc(fmtLong.format(r.dataCollection.date)) + ". That is before your proposal. Choose a later defence date or an earlier proposal.</p></div>";
+    if (r.proposal >= r.defence) {
+      html += '<div class="alert danger"><p><strong>The proposal must precede the defence.</strong> Choose an earlier proposal or a later defence date.</p></div>';
     }
     if (r.proposal < r.windowFrom || r.proposal > r.windowTo) {
       html += '<div class="alert warn"><p><strong>This proposal date is outside the lab plan.</strong> Your lab plans the proposal for ' + esc(rm.proposalText) + ", " +
         esc(fmtLong.format(r.windowFrom)) + " to " + esc(fmtLong.format(r.windowTo)) + ".</p></div>";
     }
     if (r.defence > r.programEnd) {
-      html += '<div class="alert warn"><p><strong>This defence is after the standard program length.</strong> ' + esc(prog.label) + " programs run " + esc(rm.lengthText) +
-        ", which ends on " + esc(fmtLong.format(r.programEnd)) + ". Talk with your supervisor about an extension.</p></div>";
+      html += '<div class="alert warn"><p><strong>This defence is after the planned program length.</strong> ' + esc(prog.label) + " programs normally run " + esc(rm.lengthText) +
+        (r.pause ? " plus the planned internship" : "") + ", ending on " + esc(fmtLong.format(r.programEnd)) + ". Talk with your supervisor about an extension.</p></div>";
     }
 
     html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false) +
-      '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Hover over a bar for its dates.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
+      '<p class="note">Shaded columns mark calendar years from program start. Cycle phases are illustrative three-month blocks, not deadlines; their timing and overlap vary by project. The internship pauses the plan; course bars are illustrative and actual offerings may not match. The dashed outline shows the adjusted lab proposal window. Confirm official deadlines and extensions with the department. Hover over a bar for its dates.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
     html += plansHTML(r, false);
 
     // Dated list by stage
@@ -1240,14 +1279,13 @@
   }
 
   /* ---------- After-proposal view ---------- */
-  function doneSet() {
-    return dataDoneInput.checked ? { dataCollection: true } : {};
-  }
-
   function renderPost(key) {
     var prog = PROGRAMS[key];
-    var defence = parseISO(defenceInput.value);
-    defenceHint.textContent = "The date you expect to defend and finish your degree. Every deadline counts back from it.";
+    var baselineDefence = parseISO(defenceInput.value);
+    var placement = internship();
+    var pauseDays = baselineDefence && placement && placement.start <= baselineDefence ? daysBetween(placement.start, placement.end) : 0;
+    var defence = baselineDefence ? addDays(baselineDefence, pauseDays) : null;
+    defenceHint.textContent = "Enter the defence date before the internship. The internship duration is added before calculating thesis deadlines.";
     lastItems = null;
 
     if (!defence) {
@@ -1260,10 +1298,9 @@
       return;
     }
 
-    var done = doneSet();
-    var items = compute(key, defence);
-    items.forEach(function (it) { it.done = !!done[it.id]; });
-    var active = items.filter(function (it) { return !it.done; });
+    var pause = pauseDays ? placement : null;
+    var items = pauseItems(compute(key, baselineDefence), pause);
+    var active = items;
     lastItems = { key: key, items: active, defence: defence };
     var first = active[0];
     var nextItem = null;
@@ -1281,13 +1318,14 @@
     html += "</p></div>" + actionsHTML() + "</div>";
 
     if (daysBetween(now, first.date) < 0) {
-      var earliest = earliestDefence(key, now, done);
+      var earliest = pause ? null : earliestDefence(key, now);
       html += '<div class="alert danger"><p><strong>This defence date leaves too little time.</strong> To defend on this date, you needed to ' +
         esc(first.action) + " by " + esc(fmtLong.format(first.date)) + ".</p>";
       if (earliest) {
         html += "<p>If you " + esc(first.action) + " today, the earliest defence that meets the " + esc(prog.label) +
           " rules is <strong>" + esc(fmtLong.format(earliest)) + "</strong>. " +
-          '<button type="button" class="linkbtn" data-set="' + toISO(earliest) + '">Use this date</button></p>';
+          (pauseDays && placement.start > addDays(earliest, -pauseDays) ? "" :
+            '<button type="button" class="linkbtn" data-set="' + toISO(addDays(earliest, -pauseDays)) + '">Use this date</button>') + "</p>";
       }
       html += "</div>";
     }
@@ -1300,6 +1338,20 @@
       segs.push({ cls: active[k].nextCls, label: active[k].next, from: active[k].date, to: active[k + 1].date });
     }
     var start = now < first.date ? now : first.date;
+    if (pause && pause.end > start && pause.start < defence) {
+      var split = [];
+      segs.forEach(function (s) {
+        if (s.to <= pause.start || s.from >= pause.end) {
+          split.push(s);
+        } else {
+          if (s.from < pause.start) split.push(Object.assign({}, s, { to: pause.start }));
+          if (s.to > pause.end) split.push(Object.assign({}, s, { from: pause.end }));
+        }
+      });
+      split.push({ cls: "read", label: "Internship", from: new Date(Math.max(start, pause.start)), to: new Date(Math.min(defence, pause.end)), note: "Thesis plan paused" });
+      split.sort(function (a, b) { return a.from - b.from; });
+      segs = split;
+    }
     var total = Math.max(daysBetween(start, defence), 1);
     var showToday = now > start && now <= defence;
 
@@ -1311,10 +1363,6 @@
       html += '<div class="seg ' + s.cls + '" style="flex:' + Math.max(d, 1) + ' 1 0" title="' + esc(s.label) + ": " + esc(span(d)) + '"></div>';
     });
     html += "</div>";
-    var overlap = segs.length && first.id === "dataCollection" && segs[0].to === first.date ? segs[0] : null;
-    if (overlap) {
-      html += '<div class="overlap-track" title="Analysis and writing, alongside data collection"><span class="write" style="width:' + (daysBetween(start, overlap.to) / total * 100).toFixed(2) + '%"></span></div>';
-    }
     if (showToday) {
       var pct = (daysBetween(start, now) / total) * 100;
       html += '<div class="today" style="left:' + pct.toFixed(2) + '%"><span>Today</span></div>';
@@ -1324,7 +1372,6 @@
       var d = Math.max(daysBetween(s.from, s.to), 0);
       html += '<li><i class="swatch ' + s.cls + '"></i><div><b>' + esc(s.label) + " &middot; " + esc(span(d)) + "</b><span>" +
         esc(s.note || fmtShort.format(s.from) + " to " + fmtShort.format(s.to)) + "</span></div></li>";
-      if (s === overlap) html += '<li><i class="swatch write"></i><div><b>Analysis and writing</b><span>Alongside data collection, until ' + esc(fmtShort.format(s.to)) + "</span></div></li>";
     });
     html += "</ul>" + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
     html += plansHTML(null, false);
@@ -1390,7 +1437,6 @@
       if (mode === "pre" && st) p.set("start", st.term + "-" + st.year);
       if (mode === "pre" && parseISO(proposalInput.value)) p.set("proposal", proposalInput.value);
       if (parseISO(defenceInput.value)) p.set("defence", defenceInput.value);
-      if (mode === "post" && dataDoneInput.checked) p.set("data", "done");
       courseInputs.forEach(function (input) {
         if (input.value) p.set(input.id, input.value);
         var other = document.getElementById(input.id + "Other");
@@ -1423,7 +1469,6 @@
       }
       if (parseISO(p.get("proposal"))) proposalInput.value = p.get("proposal");
       if (parseISO(p.get("defence"))) defenceInput.value = p.get("defence");
-      if (p.get("data") === "done") dataDoneInput.checked = true;
       courseInputs.forEach(function (input) {
         input.value = p.get(input.id) || "";
         document.getElementById(input.id + "Other").value = (p.get(input.id + "Other") || "").slice(0, 120);
@@ -1534,7 +1579,7 @@
   render();
 
   /* Exposed for testing. */
-  window.ThesisPlanner = { compute: compute, computeProposal: computeProposal, computeRoadmap: computeRoadmap, earliestDefence: earliestDefence, earliestProposal: earliestProposal, parseISO: parseISO, toISO: toISO, buildICS: buildICS };
+  window.ThesisPlanner = { compute: compute, computeProposal: computeProposal, computeRoadmap: computeRoadmap, pauseItems: pauseItems, earliestDefence: earliestDefence, earliestProposal: earliestProposal, parseISO: parseISO, toISO: toISO, buildICS: buildICS };
 })();
 </script>
 </body>
