@@ -444,28 +444,52 @@
         <p class="hint" id="defenceHint">The date you expect to defend and finish your degree.</p>
       </div>
       <fieldset class="planner-section">
-        <legend>First-year course planner <span class="opt">(optional)</span></legend>
-        <p class="hint">A typical plan is two courses in fall and two in winter. Choose a MItHRIL course or enter another course, including MECH or CMPE. Check current offerings, descriptions, prerequisites and registration requirements on the <a href="https://smithengineering.queensu.ca/ece/graduate/courses.html" target="_blank" rel="noopener">ECE graduate courses page</a> and confirm your plan with your supervisor.</p>
+        <legend>Course planner <span class="opt">(optional)</span></legend>
+        <p class="hint">A typical plan is two courses in each fall and winter of Year 1. Year 2 courses are discouraged, but may be needed if a required course is not offered when you need it. Choose a MItHRIL course or enter another course, including MECH or CMPE. Check current offerings, descriptions, prerequisites and registration requirements on the <a href="https://smithengineering.queensu.ca/ece/graduate/courses.html" target="_blank" rel="noopener">ECE graduate courses page</a> and confirm your plan with your supervisor.</p>
+        <p class="hint"><strong>Year 1 (typical)</strong></p>
         <div class="planner-grid">
           <div class="field">
             <label for="fall1">Fall course 1</label>
-            <select id="fall1" class="course" data-term="fall"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <select id="fall1" class="course" data-term="fall" data-year="1"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
             <input id="fall1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Fall course 1: other course" hidden>
           </div>
           <div class="field">
             <label for="fall2">Fall course 2</label>
-            <select id="fall2" class="course" data-term="fall"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <select id="fall2" class="course" data-term="fall" data-year="1"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
             <input id="fall2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Fall course 2: other course" hidden>
           </div>
           <div class="field">
             <label for="winter1">Winter course 1</label>
-            <select id="winter1" class="course" data-term="winter"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <select id="winter1" class="course" data-term="winter" data-year="1"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
             <input id="winter1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Winter course 1: other course" hidden>
           </div>
           <div class="field">
             <label for="winter2">Winter course 2</label>
-            <select id="winter2" class="course" data-term="winter"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <select id="winter2" class="course" data-term="winter" data-year="1"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
             <input id="winter2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Winter course 2: other course" hidden>
+          </div>
+        </div>
+        <p class="hint"><strong>Year 2 (optional; discouraged)</strong></p>
+        <div class="planner-grid">
+          <div class="field">
+            <label for="fallY2_1">Fall course 1</label>
+            <select id="fallY2_1" class="course" data-term="fall" data-year="2"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <input id="fallY2_1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Year 2 fall course 1: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="fallY2_2">Fall course 2</label>
+            <select id="fallY2_2" class="course" data-term="fall" data-year="2"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <input id="fallY2_2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Year 2 fall course 2: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="winterY2_1">Winter course 1</label>
+            <select id="winterY2_1" class="course" data-term="winter" data-year="2"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <input id="winterY2_1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Year 2 winter course 1: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="winterY2_2">Winter course 2</label>
+            <select id="winterY2_2" class="course" data-term="winter" data-year="2"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <input id="winterY2_2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Year 2 winter course 2: other course" hidden>
           </div>
         </div>
       </fieldset>
@@ -627,7 +651,7 @@
       items: [
         {
           id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
-          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete four term-length graduate courses, including at least two ECE graduate courses, and the ELEC 891 Graduate Seminar."
+          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete four term-length graduate courses, including at least two ECE graduate courses, and the ELEC 891 Graduate Seminar. Year 2 coursework is discouraged but may be needed if a required course is not offered when you need it."
         },
         {
           id: "research", title: "Thesis research", bar: "Thesis research", fromTerm: 1, toTerm: 6,
@@ -644,7 +668,7 @@
       items: [
         {
           id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
-          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete at least four term-length graduate courses beyond the Master's degree, including at least one ECE course and one course outside ECE, and the ELEC 891 Graduate Seminar."
+          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete at least four term-length graduate courses beyond the Master's degree, including at least one ECE course and one course outside ECE, and the ELEC 891 Graduate Seminar. Year 2 coursework is discouraged but may be needed if a required course is not offered when you need it."
         },
         {
           id: "research", title: "Research and thesis", bar: "Research and thesis", fromTerm: 1, toTerm: 12,
@@ -846,9 +870,24 @@
     });
   }
 
-  function computeRoadmap(key, startYear, startKey, proposalIn, defenceIn, placement) {
+  function computeRoadmap(key, startYear, startKey, proposalIn, defenceIn, placement, courses) {
     var rm = ROADMAPS[key];
     var terms = makeTerms(startYear, startKey, rm.terms + 9);
+    var lastCourseTerm = null;
+    function considerCourseTerm(term) {
+      if (term && (!lastCourseTerm || term.n > lastCourseTerm.n)) lastCourseTerm = term;
+    }
+    if (courses && courses.length) {
+      courses.forEach(function (course) {
+        considerCourseTerm(terms.filter(function (item) {
+          return item.progYear === course.year && item.name.toLowerCase() === course.term;
+        })[0]);
+      });
+    } else {
+      terms.filter(function (term) {
+        return term.progYear === 1 && (term.name === "Fall" || term.name === "Winter");
+      }).forEach(considerCourseTerm);
+    }
     var standardEnd = terms[rm.terms - 1].end;
     var baselineDefence = defenceIn || shift(standardEnd);
     var pause = placement && placement.start >= terms[0].start && placement.start <= baselineDefence ? placement : null;
@@ -857,9 +896,10 @@
 
     var program = rm.items.map(function (it) {
       var from = terms[it.fromTerm - 1].start;
-      var raw = it.dueMonths ? addDays(addMonths(terms[0].start, it.dueMonths), -1) : terms[it.toTerm - 1].end;
-      var tag = it.dueMonths ? "Term " + it.fromTerm + " to month " + it.dueMonths : yearsTag(it.fromTerm, it.toTerm);
-      var planned = shift(raw);
+      var toTerm = it.id === "coursework" && lastCourseTerm ? lastCourseTerm : terms[it.toTerm - 1];
+      var raw = it.dueMonths ? addDays(addMonths(terms[0].start, it.dueMonths), -1) : toTerm.end;
+      var tag = it.dueMonths ? "Term " + it.fromTerm + " to month " + it.dueMonths : yearsTag(it.fromTerm, toTerm.n);
+      var planned = it.id === "coursework" ? raw : shift(raw);
       var moved = pause && planned >= pause.start;
       return Object.assign({}, it, {
         from: from, raw: afterPause(raw, pause), date: afterPause(planned, pause), tag: tag, group: "program", pauseShifted: !!moved,
@@ -971,7 +1011,7 @@
     return courseInputs.map(function (input) {
       var other = document.getElementById(input.id + "Other");
       other.hidden = input.value !== "other";
-      return { term: input.dataset.term, name: input.value === "other" ? other.value.trim() : input.value };
+      return { term: input.dataset.term, year: Number(input.dataset.year), name: input.value === "other" ? other.value.trim() : input.value };
     }).filter(function (course) { return course.name; });
   }
 
@@ -988,11 +1028,14 @@
     html += "<p>MItHRIL expects a paper or journal publication each year, with a main push every summer. Each cycle typically progresses from robot algorithm or hardware development to experiment planning, data collection and analysis, and writing for publication. The resulting manuscripts form the thesis. Plan the timing with your supervisor.</p>";
     if (courses.length) {
       if (r && r.pause) html += "<p>Course term labels below are the original plan before the internship; confirm actual offerings and rescheduling with the department.</p>";
-      ["fall", "winter"].forEach(function (term) {
-        var names = courses.filter(function (c) { return c.term === term; }).map(function (c) { return esc(c.name); });
-        if (!names.length) return;
-        var t = r && !generic ? r.terms.slice(0, 3).filter(function (item) { return item.name.toLowerCase() === term; })[0] : null;
-        html += "<p><strong>" + esc(t ? t.label : TERM_INFO[term].name) + ":</strong> " + names.join(", ") + "</p>";
+      [1, 2].forEach(function (year) {
+        ["fall", "winter"].forEach(function (term) {
+          var names = courses.filter(function (c) { return c.year === year && c.term === term; }).map(function (c) { return esc(c.name); });
+          if (!names.length) return;
+          var t = r && !generic ? r.terms.filter(function (item) { return item.progYear === year && item.name.toLowerCase() === term; })[0] : null;
+          var label = t ? t.label + (year === 2 ? " (Year 2)" : "") : TERM_INFO[term].name + (year === 2 ? " (Year 2)" : "");
+          html += "<p><strong>" + esc(label) + ":</strong> " + names.join(", ") + "</p>";
+        });
       });
     } else {
       html += "<p>Choose courses above to add them to your plan.</p>";
@@ -1113,10 +1156,11 @@
     // Program
     html += '<div class="rm-group">Program</div>';
     r.program.forEach(function (it) {
-      html += row(it.bar, pausedBar(afterPause(it.from, r.pause), it.date, "early", it.bar + ": " + range(afterPause(it.from, r.pause), it.date)));
+      var to = it.id === "coursework" ? addDays(it.date, 1) : it.date;
+      html += row(it.bar, pausedBar(afterPause(it.from, r.pause), to, "early", it.bar + ": " + range(afterPause(it.from, r.pause), to)));
     });
     selectedCourses().forEach(function (course) {
-      var term = r.terms.slice(0, 3).filter(function (t) { return t.name.toLowerCase() === course.term; })[0];
+      var term = r.terms.filter(function (t) { return t.progYear === course.year && t.name.toLowerCase() === course.term; })[0];
       html += row(course.name, pausedBar(afterPause(term.start, r.pause), afterPause(addDays(term.end, 1), r.pause), "analyze", course.name + ": " + (generic ? term.name : term.label) + " (planning only; confirm actual offering)"));
     });
     html += '<div class="rm-group">Annual manuscript cycles</div>';
@@ -1202,7 +1246,7 @@
     var proposalIn = parseISO(proposalInput.value);
     var defenceIn = parseISO(defenceInput.value);
     var s = start || { year: now.getFullYear(), term: "fall" };
-    var r = computeRoadmap(key, s.year, s.term, generic ? null : proposalIn, generic ? null : defenceIn, generic ? null : internship());
+    var r = computeRoadmap(key, s.year, s.term, generic ? null : proposalIn, generic ? null : defenceIn, generic ? null : internship(), selectedCourses());
 
     proposalHint.textContent = generic
       ? "Leave blank to use " + fmtMonthDay.format(r.proposalDefault) + " in " + rm.proposalText + "."

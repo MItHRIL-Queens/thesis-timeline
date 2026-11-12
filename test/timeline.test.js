@@ -54,6 +54,24 @@ test("the M.A.Sc. preliminary proposal checkpoint is due at the end of semester 
   assert.equal(roadmap.pre[0].date.getTime(), roadmap.proposal.getTime());
 });
 
+test("coursework extends through the final selected course term in either degree", () => {
+  const p = planner();
+  for (const degree of ["msc", "phd"]) {
+    for (const [term, expectedEnd] of [["fall", "2027-04-30"], ["winter", "2026-12-31"], ["summer", "2027-04-30"]]) {
+      const defaultPlan = p.computeRoadmap(degree, 2026, term, null, null);
+      const coursework = defaultPlan.program.find(item => item.id === "coursework");
+      assert.equal(p.toISO(coursework.date), expectedEnd);
+    }
+
+    const extendedPlan = p.computeRoadmap(degree, 2026, "fall", null, null, null, [
+      { term: "winter", year: 1, name: "Required course" },
+      { term: "fall", year: 2, name: "Second-year course" },
+      { term: "winter", year: 2, name: "Final course" }
+    ]);
+    assert.equal(p.toISO(extendedPlan.program.find(item => item.id === "coursework").date), "2028-04-30");
+  }
+});
+
 test("internship delays only events at or after its start, including exports", () => {
   const p = planner();
   const pause = { start: p.parseISO("2027-07-01"), end: p.parseISO("2027-10-01"), months: 3 };
