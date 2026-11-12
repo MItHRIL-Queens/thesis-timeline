@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MItHRIL Thesis Timeline Planner</title>
-<meta name="description" content="M.Sc. and Ph.D. roadmaps and thesis deadlines for the Machine Intelligence and Human-Robot Interaction Laboratory in Smith Engineering's Electrical and Computer Engineering Department at Queen's University.">
+<meta name="description" content="M.A.Sc. and Ph.D. roadmaps and thesis deadlines for the Machine Intelligence and Human-Robot Interaction Laboratory in Smith Engineering's Electrical and Computer Engineering Department at Queen's University.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
@@ -184,6 +184,15 @@
   .check-field { align-self: center; }
   .field > label.check { display: inline-flex; align-items: center; gap: 10px; margin: 0; font-weight: 500; font-size: .95rem; cursor: pointer; }
   .field .check input { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 0; accent-color: var(--accent); flex: none; }
+  .planner-section { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--line); margin: 0; padding: 18px 0 0; min-width: 0; }
+  .planner-section legend { float: left; width: 100%; margin-bottom: 4px; }
+  .planner-section .hint { clear: both; margin-bottom: 12px; }
+  .planner-section a { color: var(--accent); }
+  .planner-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .planner-grid .field input + input, .planner-grid .field select + input { margin-top: 8px; }
+  .plan-summary { padding: 18px 22px; margin-bottom: 22px; }
+  .plan-summary h3 { margin: 0 0 6px; font-size: 1rem; }
+  .plan-summary p { margin: 6px 0; }
 
   /* Results */
   #results { margin: 28px 0 0; }
@@ -347,6 +356,7 @@
     header.site { padding: 32px 0 20px; }
     .form { grid-template-columns: 1fr; padding: 20px; }
     .choice-options { grid-template-columns: 1fr; }
+    .planner-grid { grid-template-columns: 1fr; }
     .summary { flex-direction: column; align-items: stretch; }
     .actions .btn { flex: 1 1 auto; justify-content: center; }
     .ms { grid-template-columns: 70px 1fr; gap: 12px; }
@@ -389,7 +399,7 @@
         <div class="choice-options">
           <label class="choice">
             <input type="radio" name="degree" value="msc" checked>
-            <span><strong>M.Sc.</strong><small>Master's thesis, 2 years</small></span>
+            <span><strong>M.A.Sc.</strong><small>Master's thesis, 2 years</small></span>
           </label>
           <label class="choice">
             <input type="radio" name="degree" value="phd">
@@ -436,6 +446,40 @@
       <div class="field check-field" data-mode="post">
         <label class="check"><input type="checkbox" id="dataDone" name="dataDone" value="dataCollection"><span>My data collection is already finished</span></label>
       </div>
+      <fieldset class="planner-section">
+        <legend>First-year course planner <span class="opt">(optional)</span></legend>
+        <p class="hint">A typical plan is two courses in fall and two in winter. Choose a MItHRIL course or enter another course, including MECH or CMPE. Check current offerings, descriptions, prerequisites and registration requirements on the <a href="https://smithengineering.queensu.ca/ece/graduate/courses.html" target="_blank" rel="noopener">ECE graduate courses page</a> and confirm your plan with your supervisor.</p>
+        <div class="planner-grid">
+          <div class="field">
+            <label for="fall1">Fall course 1</label>
+            <select id="fall1" class="course" data-term="fall"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <input id="fall1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Fall course 1: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="fall2">Fall course 2</label>
+            <select id="fall2" class="course" data-term="fall"><option value="">Not selected</option><option value="ELEC 844">ELEC 844 — Search and Planning Algorithms for Robotics</option><option value="ELEC 870">ELEC 870 — Human-Robot Interaction</option><option value="other">Other course</option></select>
+            <input id="fall2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Fall course 2: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="winter1">Winter course 1</label>
+            <select id="winter1" class="course" data-term="winter"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <input id="winter1Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Winter course 1: other course" hidden>
+          </div>
+          <div class="field">
+            <label for="winter2">Winter course 2</label>
+            <select id="winter2" class="course" data-term="winter"><option value="">Not selected</option><option value="ELEC 842">ELEC 842 — Safe Learning-Based Control for Robotics</option><option value="ELEC 845">ELEC 845 — Autonomous Vehicle Control and Navigation</option><option value="ELEC 848">ELEC 848 — Control Systems Design for Robots &amp; Telerobots</option><option value="other">Other course</option></select>
+            <input id="winter2Other" type="text" maxlength="120" placeholder="Course code and title" aria-label="Winter course 2: other course" hidden>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="planner-section">
+        <legend>Internship <span class="opt">(optional)</span></legend>
+        <p class="hint">Plan an internship of 3 to 12 months at any point in your thesis. Discuss its timing and any impact on your degree with your supervisor; thesis deadlines are not automatically moved.</p>
+        <div class="planner-grid">
+          <div class="field"><label for="internStart">Internship start date</label><input type="date" id="internStart" min="2000-01-01" max="2100-12-31"></div>
+          <div class="field"><label for="internMonths">Duration</label><select id="internMonths"><option value="">Choose duration</option><option value="3">3 months</option><option value="4">4 months</option><option value="5">5 months</option><option value="6">6 months</option><option value="7">7 months</option><option value="8">8 months</option><option value="9">9 months</option><option value="10">10 months</option><option value="11">11 months</option><option value="12">12 months</option></select></div>
+        </div>
+      </fieldset>
     </form>
 
     <section id="results" aria-live="polite"></section>
@@ -466,7 +510,7 @@
         <div>
           <h3>Completing your thesis</h3>
           <ul>
-            <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/Web%20updates/MSC_OralExamForms_Arts%26Science_BIOL_CHEM_COMP_ENSC_GPPL_GSGE_KHS_MAST_PEPA_PSYC_revised_2025.pdf" target="_blank" rel="noopener">M.Sc. Oral Thesis Examination Form</a></li>
+            <li><a href="https://www.queensu.ca/grad-postdoc/faculty-staff/degree-completion/masters-oral-exam" target="_blank" rel="noopener">Master's oral examination forms and procedures</a><span>See Engineering &amp; Applied Sciences for ECE.</span></li>
             <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/PHD_OralThesisExamForm_NEW.pdf" target="_blank" rel="noopener">Ph.D. Oral Thesis Examination Form</a></li>
             <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/Standards%20for%20Graduate%20Theses%202025.pdf" target="_blank" rel="noopener">Standards for Graduate Theses 2025</a></li>
             <li><a href="https://www.queensu.ca/grad-postdoc/sites/sgswww/files/uploaded_files/SGS_CoAuthor_21April2015.pdf" target="_blank" rel="noopener">Permission of Co-Authors Form</a></li>
@@ -518,7 +562,7 @@
 
   var PROGRAMS = {
     msc: {
-      label: "M.Sc.",
+      label: "M.A.Sc.",
       note: WRITING_NOTE,
       milestones: [
         DATA_COLLECTION,
@@ -607,8 +651,8 @@
       proposalText: "the Fall or Winter term of Year 2",
       items: [
         {
-          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 2,
-          rule: "Complete four term-length graduate courses, including at least two ECE graduate courses, and the ELEC 891 Graduate Seminar."
+          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
+          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete four term-length graduate courses, including at least two ECE graduate courses, and the ELEC 891 Graduate Seminar."
         },
         {
           id: "research", title: "Thesis research", bar: "Thesis research", fromTerm: 1, toTerm: 6,
@@ -623,8 +667,8 @@
       proposalText: "the final term of Year 2 (Part II comprehensive exam)",
       items: [
         {
-          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 2,
-          rule: "Complete at least four term-length graduate courses beyond the Master's degree, including at least one ECE course and one course outside ECE, and the ELEC 891 Graduate Seminar."
+          id: "coursework", title: "Coursework complete", bar: "Coursework", fromTerm: 1, toTerm: 3,
+          rule: "Typically plan two courses in fall and two in winter of Year 1. Complete at least four term-length graduate courses beyond the Master's degree, including at least one ECE course and one course outside ECE, and the ELEC 891 Graduate Seminar."
         },
         {
           id: "research", title: "Research and thesis", bar: "Research and thesis", fromTerm: 1, toTerm: 12,
@@ -678,6 +722,9 @@
   var startTermInput = document.getElementById("startTerm");
   var startYearInput = document.getElementById("startYear");
   var dataDoneInput = document.getElementById("dataDone");
+  var courseInputs = Array.from(form.querySelectorAll(".course"));
+  var internStartInput = document.getElementById("internStart");
+  var internMonthsInput = document.getElementById("internMonths");
   var proposalHint = document.getElementById("proposalHint");
   var defenceHint = document.getElementById("defenceHint");
   var defenceOpt = document.getElementById("defenceOpt");
@@ -922,6 +969,52 @@
     defenceOpt.hidden = mode !== "pre";
   }
 
+  function selectedCourses() {
+    return courseInputs.map(function (input) {
+      var other = document.getElementById(input.id + "Other");
+      other.hidden = input.value !== "other";
+      return { term: input.dataset.term, name: input.value === "other" ? other.value.trim() : input.value };
+    }).filter(function (course) { return course.name; });
+  }
+
+  function internship() {
+    var start = parseISO(internStartInput.value);
+    var months = Number(internMonthsInput.value);
+    if (!start || !Number.isInteger(months) || months < 3 || months > 12) return null;
+    return { start: start, end: addMonths(start, months), months: months };
+  }
+
+  function plansHTML(r, generic) {
+    var courses = selectedCourses();
+    var html = '<div class="card plan-summary"><h3>Courses and publications</h3>';
+    html += "<p>MItHRIL expects a paper or journal publication each year, with a main push every summer. Plan publication work throughout the year with your supervisor.</p>";
+    if (courses.length) {
+      ["fall", "winter"].forEach(function (term) {
+        var names = courses.filter(function (c) { return c.term === term; }).map(function (c) { return esc(c.name); });
+        if (!names.length) return;
+        var t = r && !generic ? r.terms.slice(0, 3).filter(function (item) { return item.name.toLowerCase() === term; })[0] : null;
+        html += "<p><strong>" + esc(t ? t.label : TERM_INFO[term].name) + ":</strong> " + names.join(", ") + "</p>";
+      });
+    } else {
+      html += "<p>Choose courses above to add them to your plan.</p>";
+    }
+    html += "</div>";
+
+    var placement = internship();
+    if (placement) {
+      html += '<div class="card plan-summary"><h3>Internship</h3><p>' + esc(fmtLong.format(placement.start)) + " to " + esc(fmtLong.format(placement.end)) +
+        " (" + plural(placement.months, "month") + "; end date is exclusive). Thesis deadlines remain unchanged.</p></div>";
+      if (r && !generic && (placement.start < r.terms[0].start || placement.end > addDays(r.defence, 1))) {
+        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship starts before your program or ends after your planned defence. Discuss the timing with your supervisor.</p></div>';
+      } else if (!r && parseISO(defenceInput.value) && placement.end > addDays(parseISO(defenceInput.value), 1)) {
+        html += '<div class="alert warn"><p><strong>Check your internship dates.</strong> The internship ends after your planned defence. Discuss the timing with your supervisor.</p></div>';
+      }
+    } else if (internStartInput.value || internMonthsInput.value) {
+      html += '<div class="alert warn"><p><strong>Internship not yet planned.</strong> Enter a valid start date and a duration of 3 to 12 months.</p></div>';
+    }
+    return html;
+  }
+
   /* ---------- Rendering helpers ---------- */
   var ICONS = {
     cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
@@ -1007,6 +1100,18 @@
     r.program.forEach(function (it) {
       html += row(it.bar, bar(it.from, it.date, "early", it.bar + ": " + range(it.from, it.date)));
     });
+    selectedCourses().forEach(function (course) {
+      var term = r.terms.slice(0, 3).filter(function (t) { return t.name.toLowerCase() === course.term; })[0];
+      html += row(course.name, bar(term.start, addDays(term.end, 1), "analyze", course.name + ": " + (generic ? term.name : term.label)));
+    });
+    var summers = r.terms.slice(0, ROADMAPS[currentKey()].terms).filter(function (t) { return t.name === "Summer"; });
+    html += row("Publication push", summers.map(function (t) {
+      return bar(t.start, addDays(t.end, 1), "write", "Annual publication push: " + (generic ? "Summer, Year " + t.progYear : t.label));
+    }).join(""));
+    var placement = internship();
+    if (placement && !generic && placement.start < a1 && placement.end > a0) {
+      html += row("Internship", bar(placement.start, placement.end, "read", "Internship: " + range(placement.start, placement.end)));
+    }
 
     // Proposal
     html += '<div class="rm-group">Proposal</div>';
@@ -1066,6 +1171,7 @@
       html += '<div class="card roadmap"><p class="eyebrow-sm">' + esc(prog.label) + " roadmap, " + esc(rm.lengthText) + "</p>" +
         roadmapChartHTML(r, now, true) +
         '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Diamonds mark the proposal meeting and the defence.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
+      html += plansHTML(r, true);
       results.innerHTML = html;
       return;
     }
@@ -1116,6 +1222,7 @@
 
     html += '<div class="card roadmap"><p class="eyebrow-sm">Your roadmap</p>' + roadmapChartHTML(r, now, false) +
       '<p class="note">Shaded columns mark program years. The dashed outline shows when your lab plans the proposal. Hover over a bar for its dates.</p>' + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
+    html += plansHTML(r, false);
 
     // Dated list by stage
     var groups = [
@@ -1144,12 +1251,12 @@
     lastItems = null;
 
     if (!defence) {
-      results.innerHTML = '<div class="empty">Enter your planned defence date to see your timeline.</div>';
+      results.innerHTML = '<div class="empty">Enter your planned defence date to see your timeline.</div>' + plansHTML(null, false);
       return;
     }
     var now = today();
     if (daysBetween(now, defence) < 0) {
-      results.innerHTML = '<div class="alert danger"><p><strong>That date has passed.</strong> Enter a planned defence date in the future.</p></div>';
+      results.innerHTML = '<div class="alert danger"><p><strong>That date has passed.</strong> Enter a planned defence date in the future.</p></div>' + plansHTML(null, false);
       return;
     }
 
@@ -1220,6 +1327,7 @@
       if (s === overlap) html += '<li><i class="swatch write"></i><div><b>Analysis and writing</b><span>Alongside data collection, until ' + esc(fmtShort.format(s.to)) + "</span></div></li>";
     });
     html += "</ul>" + (prog.note ? '<p class="note">Note: ' + esc(prog.note) + "</p>" : "") + "</div>";
+    html += plansHTML(null, false);
 
     html += '<ol class="timeline">';
     items.forEach(function (it) { html += milestoneHTML(it, now, nextItem, false); });
@@ -1283,6 +1391,13 @@
       if (mode === "pre" && parseISO(proposalInput.value)) p.set("proposal", proposalInput.value);
       if (parseISO(defenceInput.value)) p.set("defence", defenceInput.value);
       if (mode === "post" && dataDoneInput.checked) p.set("data", "done");
+      courseInputs.forEach(function (input) {
+        if (input.value) p.set(input.id, input.value);
+        var other = document.getElementById(input.id + "Other");
+        if (input.value === "other" && other.value.trim()) p.set(input.id + "Other", other.value.trim());
+      });
+      if (parseISO(internStartInput.value)) p.set("internStart", internStartInput.value);
+      if (internMonthsInput.value) p.set("internMonths", internMonthsInput.value);
       history.replaceState(null, "", location.pathname + "?" + p.toString());
     } catch (e) { /* ignore */ }
   }
@@ -1309,6 +1424,12 @@
       if (parseISO(p.get("proposal"))) proposalInput.value = p.get("proposal");
       if (parseISO(p.get("defence"))) defenceInput.value = p.get("defence");
       if (p.get("data") === "done") dataDoneInput.checked = true;
+      courseInputs.forEach(function (input) {
+        input.value = p.get(input.id) || "";
+        document.getElementById(input.id + "Other").value = (p.get(input.id + "Other") || "").slice(0, 120);
+      });
+      if (parseISO(p.get("internStart"))) internStartInput.value = p.get("internStart");
+      internMonthsInput.value = p.get("internMonths") || "";
     } catch (e) { /* ignore */ }
   }
 
@@ -1394,7 +1515,7 @@
   /* ---------- Events ---------- */
   form.addEventListener("change", render);
   form.addEventListener("input", function (e) {
-    if (e.target === defenceInput || e.target === proposalInput) render();
+    if (e.target === defenceInput || e.target === proposalInput || e.target === internStartInput || /Other$/.test(e.target.id)) render();
   });
   form.addEventListener("submit", function (e) { e.preventDefault(); render(); });
   results.addEventListener("click", function (e) {
