@@ -34,13 +34,24 @@ function planner() {
 
 test("publication cycles do not impose a thesis-wide collection deadline", () => {
   const p = planner();
-  for (const degree of ["msc", "phd"]) {
-    for (const term of ["winter", "summer", "fall"]) {
-      const roadmap = p.computeRoadmap(degree, 2027, term, null, null);
-      assert.deepEqual(Array.from(roadmap.thesis, item => item.id), ["firstDraft", "committee", "defence"]);
-      assert.deepEqual(Array.from(roadmap.pre, item => item.id), ["writingStart", "toCommittee", "proposal"]);
-    }
+  for (const term of ["winter", "summer", "fall"]) {
+    const msc = p.computeRoadmap("msc", 2027, term, null, null);
+    assert.deepEqual(Array.from(msc.thesis, item => item.id), ["firstDraft", "committee", "defence"]);
+    assert.deepEqual(Array.from(msc.pre, item => item.id), ["proposal"]);
+    assert.equal(msc.pre[0].title, "Preliminary proposal checkpoint");
+    assert.match(msc.pre[0].rule, /informally with your supervisor/);
+
+    const phd = p.computeRoadmap("phd", 2027, term, null, null);
+    assert.deepEqual(Array.from(phd.thesis, item => item.id), ["firstDraft", "committee", "defence"]);
+    assert.deepEqual(Array.from(phd.pre, item => item.id), ["writingStart", "toCommittee", "proposal"]);
   }
+});
+
+test("the M.A.Sc. preliminary proposal checkpoint is due at the end of semester two", () => {
+  const p = planner();
+  const roadmap = p.computeRoadmap("msc", 2027, "fall", null, null);
+  assert.equal(p.toISO(roadmap.proposal), "2028-04-30");
+  assert.equal(roadmap.pre[0].date.getTime(), roadmap.proposal.getTime());
 });
 
 test("internship delays only events at or after its start, including exports", () => {

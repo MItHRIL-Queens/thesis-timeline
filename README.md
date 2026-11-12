@@ -2,7 +2,7 @@
 
 A one-page planner for graduate students in the Machine Intelligence and Human-Robot Interaction Laboratory (MItHRIL), in Smith Engineering's Electrical and Computer Engineering Department at Queen's University.
 
-Original idea by Jeff at the LAMP lab.
+Original idea by [Jeffrey Wammes](https://www.queensu.ca/psychology/node/130) of the [LAMP Lab](https://www.thelamplab.ca/).
 
 Students choose M.A.Sc. or Ph.D. and where to start the countdown:
 
@@ -17,7 +17,7 @@ Students choose M.A.Sc. or Ph.D. and where to start the countdown:
 | Thesis research | Throughout the 2-year program | Throughout the 4-year program |
 | Part I comprehensive exam | | Report within 10 months; exam within 2 months of report |
 | Part II comprehensive exam (thesis proposal) | | Report within 22 months; exam within 2 months of report |
-| Thesis proposal | Fall or Winter of Year 2 | Final term of Year 2 (Part II) |
+| Proposal milestone | Informal preliminary-proposal check-in with the supervisor after the first two semesters; no committee submission | Final term of Year 2 (Part II comprehensive exam) |
 
 The manuscript-style thesis is built from publications. MItHRIL expects a paper or journal publication each year, with a main push every summer. Each annual cycle progresses from robot algorithm or hardware development, to experiment planning, data collection and analysis, and writing for publication. The roadmap illustrates each phase as three months, but actual timing and overlap vary by project; these are planning goals, not fixed deadlines.
 
@@ -27,9 +27,9 @@ An optional internship of 3–12 months pauses the thesis plan and adds its actu
 
 The adjusted dates are planning dates, not approved extensions of university deadlines. Confirm exam deadlines, course availability, leave and extensions with the supervisor and department. Course bars and labels are illustrative, not actual rescheduled class offerings. Summer publication pushes follow the calendar and pause during the internship.
 
-## Proposal countdown (both degrees)
+## Ph.D. proposal countdown
 
-Counted back from the proposal meeting: proposal writing and revisions (1 to 2 months, the planner allows 2), and proposal to committee (2 months before the meeting). Research and publication cycles continue alongside proposal work.
+For Ph.D. students, the planner counts back from the proposal meeting: proposal writing and revisions (1 to 2 months, the planner allows 2), and proposal submission to the committee (2 months before the meeting). Research and publication cycles continue alongside proposal work. M.A.Sc. students have an informal preliminary-proposal checkpoint with their supervisor after the first two semesters; it is not submitted to a committee.
 
 ## Thesis deadlines
 
@@ -38,7 +38,7 @@ Counted back from the proposal meeting: proposal writing and revisions (1 to 2 m
 | M.A.Sc. | At least 2 months before the thesis goes to the committee | At least 1 month before the defence |
 | Ph.D. | At least 3 months before the thesis goes to the committee | At least 8 weeks before the defence |
 
-Baseline deadlines that land on a weekend move to the Friday before; an internship then shifts affected planning dates by its actual duration, which may place them on a weekend. There is no single thesis-wide data collection deadline: data collection and analysis happen within each publication cycle.
+Baseline thesis deadlines that land on a weekend move to the Friday before; an internship then shifts affected planning dates by its actual duration, which may place them on a weekend. There is no single thesis-wide data collection deadline: data collection and analysis happen within each publication cycle.
 
 ## Features
 
@@ -54,7 +54,7 @@ The bottom of the page links to ECE MASc and Ph.D. program requirements, current
 
 ## Changing the rules
 
-Thesis deadlines live in the `PROGRAMS` block near the top of the script in `index.html`. The proposal countdown lives in `PROPOSAL_STEPS` and the program roadmap in `ROADMAPS`. Each milestone is set a fixed time before a later one:
+Thesis deadlines live in the `PROGRAMS` block near the top of the script in `index.html`. The Ph.D. proposal countdown lives in `PROPOSAL_STEPS`; proposal timing and labels for each degree are in `ROADMAPS`. Each countdown milestone is set a fixed time before a later one:
 
 ```js
 {
