@@ -13,7 +13,7 @@ Students choose M.A.Sc. or Ph.D. and where to start the countdown:
 
 | | M.A.Sc. (2 years, 6 terms) | Ph.D. (4 years, 12 terms) |
 |---|---|---|
-| Coursework | Year 1, typically two courses in fall and two in winter | Year 1, typically two courses in fall and two in winter |
+| Coursework | Typically Year 1; may extend into Year 2 if a required course is not offered when needed (discouraged) | Typically Year 1; may extend into Year 2 if a required course is not offered when needed (discouraged) |
 | Thesis research | Throughout the 2-year program | Throughout the 4-year program |
 | Part I comprehensive exam | | Report within 10 months; exam within 2 months of report |
 | Part II comprehensive exam (thesis proposal) | | Report within 22 months; exam within 2 months of report |
@@ -21,7 +21,7 @@ Students choose M.A.Sc. or Ph.D. and where to start the countdown:
 
 The manuscript-style thesis is built from publications. MItHRIL expects a paper or journal publication each year, with a main push every summer. Each annual cycle progresses from robot algorithm or hardware development, to experiment planning, data collection and analysis, and writing for publication. The roadmap illustrates each phase as three months, but actual timing and overlap vary by project; these are planning goals, not fixed deadlines.
 
-The optional course planner offers MItHRIL's fall ELEC 844 and 870 and winter ELEC 842, 845 and 848, or a free-text alternative for each slot. Selected courses appear in their respective first-year terms on the roadmap. Check the [ECE graduate course page](https://smithengineering.queensu.ca/ece/graduate/courses.html) for descriptions, current offerings and registration details; confirm course choices and degree requirements with your supervisor.
+The optional course planner offers MItHRIL's fall ELEC 844 and 870 and winter ELEC 842, 845 and 848, or a free-text alternative for each slot. Year 1 is the typical course schedule; Year 2 course slots are available when a required course is not offered when needed, though taking courses in Year 2 is discouraged. Selected courses appear in their respective terms on the roadmap, and the coursework bar ends with the last course in the selected plan (or the typical Year 1 Fall/Winter schedule when no courses are selected). Check the [ECE graduate course page](https://smithengineering.queensu.ca/ece/graduate/courses.html) for descriptions, current offerings and registration details; confirm course choices and degree requirements with your supervisor.
 
 An optional internship of 3–12 months pauses the thesis plan and adds its actual calendar duration to it. Its displayed end date is exclusive. Events on or after the internship starts are delayed by that duration, while earlier events remain unchanged; chart activities are interrupted and resume after the internship. Enter proposal and defence dates as they were planned **before** the internship; the displayed dates, milestones and calendar export include the pause. The before-proposal view requires a program start to apply it and checks the start against the program and pre-internship defence. The after-proposal view checks against the pre-internship defence but cannot check the program start.
 
