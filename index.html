@@ -107,6 +107,14 @@
   .wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
 
   header.site { padding: 48px 0 24px; }
+  .site-logo { display: block; width: min(100%, 720px); height: auto; margin: 0 0 16px; }
+  .site-logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .site-logo-light { display: none; }
+    :root:not([data-theme="light"]) .site-logo-dark { display: block; }
+  }
+  :root[data-theme="dark"] .site-logo-light { display: none; }
+  :root[data-theme="dark"] .site-logo-dark { display: block; }
   .eyebrow {
     margin: 0;
     font-size: .75rem;
@@ -366,7 +374,8 @@
 <body>
   <header class="site">
     <div class="wrap">
-      <p class="eyebrow">Machine Intelligence and Human-Robot Interaction Laboratory &middot; Smith Engineering, Electrical and Computer Engineering</p>
+      <img class="site-logo site-logo-light" src="assets/MItHRIL-horz-blacktext-colorrobot-clearback.png" alt="Machine Intelligence and Human-Robot Interaction Laboratory">
+      <img class="site-logo site-logo-dark" src="assets/MItHRIL-horz-whitetext-colorrobot-clearback.png" alt="Machine Intelligence and Human-Robot Interaction Laboratory">
       <h1>Thesis Timeline Planner</h1>
       <p class="lede">Choose your degree and where you are in it. Before your proposal, the planner lays out a roadmap from your first term to your defence. After your proposal, it counts back from your defence to each thesis deadline.</p>
       <p class="credit">Original idea by Jeff at the LAMP lab.</p>
